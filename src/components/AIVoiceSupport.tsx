@@ -12,7 +12,8 @@ import {
   HelpCircle,
   CornerDownLeft,
   Minimize2,
-  Maximize2
+  Maximize2,
+  Settings
 } from 'lucide-react';
 
 interface ChatMessage {
@@ -203,6 +204,107 @@ const parseInitialDetails = (input: string): LeadForm => {
   return form;
 };
 
+const UI_TRANSLATIONS = {
+  en: {
+    subtitle: "Premium Design Consultant",
+    speakTab: "Speak",
+    typeTab: "Type",
+    placeholderStatusListening: "Speak now. I am listening...",
+    placeholderStatusSpeaking: "Aura is speaking...",
+    placeholderStatusStandby: "Tap the sphere and describe your vision. Tap again when done to print magic.",
+    inputPlaceholder: "Type premium brand custom specifications...",
+    listeningLabel: "Listening",
+    speakingLabel: "Speaking",
+    tapSpeakLabel: "Tap Speak",
+    settingsTitle: "Aura Settings",
+    selectLanguage: "Language Preference",
+    langEn: "English (US/UK)",
+    langHi: "हिन्दी (Hindi)",
+    langHing: "Hinglish (Hindi + English)",
+    saveBtn: "Close & Save",
+    quickActionTitle: "Suggested Quick Actions (📍 Location, 💬 WhatsApp, etc):",
+    directSupportTitle: "Direct Premium Support",
+    suggestedTriggersTitle: "💡 Direct Quick Suggestions (Auto-Chat Triggers):",
+    leadTimesBadge: "🕒 Lead Times",
+    directSalesBadge: "📞 Direct Sales",
+    leatherDiariesBadge: "📔 Leather Diaries",
+    sendButtonTitle: "Send query",
+    activeMicCapture: "🎙️ Active microphone capture...",
+    chatMinimized: "💬 Chat session is minimized",
+    settingsBack: "Back to Chat",
+    descriptionText: "Customize your real-time chat & vocal interaction language preference. Aura adapts seamlessly to your natural language style."
+  },
+  hi: {
+    subtitle: "लक्जरी प्रिंट सलाहकार",
+    speakTab: "बोलें",
+    typeTab: "लिखें",
+    placeholderStatusListening: "अभी बोलें। मैं सुन रही हूँ...",
+    placeholderStatusSpeaking: "ऑरा बोल रही है...",
+    placeholderStatusStandby: "गोले पर टैप करें और अपना विचार बताएं। मैजिक प्रिंट करने के लिए फिर से टैप करें।",
+    inputPlaceholder: "प्रीमियम ब्रांड कस्टमाइजेशन विवरण टाइप करें...",
+    listeningLabel: "सुन रही हूँ",
+    speakingLabel: "बोल रही हूँ",
+    tapSpeakLabel: "टैप करें",
+    settingsTitle: "ऑरा सेटिंग्स",
+    selectLanguage: "भाषा प्राथमिकता",
+    langEn: "अंग्रेजी (English)",
+    langHi: "हिन्दी (Hindi)",
+    langHing: "हिंग्लिश (Hinglish)",
+    saveBtn: "बंद करें और सहेजें",
+    quickActionTitle: "त्वरित कार्रवाई सुझाव (📍 लोकेशन, 💬 व्हाट्सएप आदि):",
+    directSupportTitle: "सीधा प्रीमियम सपोर्ट",
+    suggestedTriggersTitle: "💡 त्वरित सुझाव (ऑटो-चैट ट्रिगर):",
+    leadTimesBadge: "🕒 डिलीवरी समय",
+    directSalesBadge: "📞 सीधा संपर्क",
+    leatherDiariesBadge: "📔 लेदर डायरी",
+    sendButtonTitle: "संदेश भेजें",
+    activeMicCapture: "🎙️ सक्रिय माइक्रोफ़ोन कैप्चर...",
+    chatMinimized: "💬 चैट सत्र छोटा किया गया है",
+    settingsBack: "चैट पर वापस जाएं",
+    descriptionText: "अपनी रीयल-टाइम चैट और वॉयस इंटरैक्शन के लिए भाषा प्राथमिकता चुनें। ऑरा आपकी प्राकृतिक भाषा शैली के अनुसार ढल जाती है।"
+  },
+  hinglish: {
+    subtitle: "Premium Design Consultant",
+    speakTab: "Bolkar",
+    typeTab: "Type karke",
+    placeholderStatusListening: "Abhi boliye. Main sun rahi hoon...",
+    placeholderStatusSpeaking: "Aura bol rahi hai...",
+    placeholderStatusStandby: "Sphere par tap karein aur apna idea share karein. Print magic ke liye fir se tap karein.",
+    inputPlaceholder: "Premium brand custom details type karein...",
+    listeningLabel: "Sun rahi hoon",
+    speakingLabel: "Speak kar rahi",
+    tapSpeakLabel: "Tap Speak",
+    settingsTitle: "Aura Settings",
+    selectLanguage: "Language Preference",
+    langEn: "English (Angrezi)",
+    langHi: "Hindi (हिन्दी)",
+    langHing: "Hinglish (Hindi + English)",
+    saveBtn: "Close & Save",
+    quickActionTitle: "Suggested Quick Actions (📍 Location, 💬 WhatsApp, etc):",
+    directSupportTitle: "Direct Premium Support",
+    suggestedTriggersTitle: "💡 Direct Quick Suggestions (Auto-Chat Triggers):",
+    leadTimesBadge: "🕒 Delivery Time",
+    directSalesBadge: "📞 Direct Contact",
+    leatherDiariesBadge: "📔 Leather Diary",
+    sendButtonTitle: "Send karein",
+    activeMicCapture: "🎙️ Microphone active hai...",
+    chatMinimized: "💬 Chat session minimized hai",
+    settingsBack: "Chat par wapas",
+    descriptionText: "Apni language setting customize karein. Aura aapki natural language style ke sath instantly adapt ho jayegi."
+  }
+};
+
+const getWelcomeText = (lang: 'en' | 'hi' | 'hinglish') => {
+  switch (lang) {
+    case 'hi':
+      return "नमस्ते! अंशू के प्रीमियम बुकिंग एंड इन्क्वायरी लाउंज में आपका स्वागत है। मैं आपकी डिज़ाइन सलाहकार ऑरा हूँ। हम नए ऑर्डर्स स्वीकार कर रहे हैं! क्या आप अपनी ब्रांडिंग आवश्यकताओं के बारे में बोलना या लिखना पसंद करेंगे?";
+    case 'hinglish':
+      return "Greetings! Anshu's Premium Booking & Enquiry Lounge mein aapka swagat hai. Main hoon Aura, aapki design consultant. Hum new orders accept kar rahe hain! Kya aap bolna chahenge ya type karke details share karenge?";
+    default:
+      return "Greetings! Welcome to Anshu's Premium Booking & Enquiry Lounge. I am Aura, your premium design consultant. We are fully accepting new orders! Would you like to speak or type your custom branding specifications today?";
+  }
+};
+
 export default function AIVoiceSupport() {
   const [isOpen, setIsOpen] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
@@ -214,8 +316,24 @@ export default function AIVoiceSupport() {
   const [leadForm, setLeadForm] = useState<LeadForm>({});
   const [isCollecting, setIsCollecting] = useState(false);
   const [currentFieldIndex, setCurrentFieldIndex] = useState(0);
-  const [isHindiMode, setIsHindiMode] = useState(false);
-  const [selectedLang, setSelectedLang] = useState<'en' | 'hi' | 'hinglish'>('en');
+  const [selectedLang, setSelectedLang] = useState<'en' | 'hi' | 'hinglish'>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('aura_selected_lang');
+      if (saved === 'en' || saved === 'hi' || saved === 'hinglish') {
+        return saved;
+      }
+    }
+    return 'en';
+  });
+  const [isHindiMode, setIsHindiMode] = useState<boolean>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('aura_selected_lang');
+      return saved === 'hi' || saved === 'hinglish';
+    }
+    return false;
+  });
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const t = UI_TRANSLATIONS[selectedLang];
 
   // Pre-chat quick actions and price estimate flows
   const [printingOptionsActive, setPrintingOptionsActive] = useState(false);
@@ -223,14 +341,18 @@ export default function AIVoiceSupport() {
   const [priceEstimateStep, setPriceEstimateStep] = useState(0);
 
   // Unified Message History (Session Continuity preserved)
-  const [messages, setMessages] = useState<ChatMessage[]>([
-    {
-      id: 'welcome-1',
-      role: 'assistant',
-      text: "Greetings! Welcome to Anshu's Premium Booking & Enquiry Lounge. I am Aura, your premium design consultant. We are fully accepting new orders! Would you like to speak or type your custom branding specifications today?",
-      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-    }
-  ]);
+  const [messages, setMessages] = useState<ChatMessage[]>(() => {
+    const savedLang = typeof window !== 'undefined' ? (localStorage.getItem('aura_selected_lang') as 'en' | 'hi' | 'hinglish' || 'en') : 'en';
+    const lang = (savedLang === 'en' || savedLang === 'hi' || savedLang === 'hinglish') ? savedLang : 'en';
+    return [
+      {
+        id: 'welcome-1',
+        role: 'assistant',
+        text: getWelcomeText(lang),
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      }
+    ];
+  });
 
   const [inputText, setInputText] = useState('');
   
@@ -322,6 +444,40 @@ export default function AIVoiceSupport() {
     recognitionRef.current = rec;
   }, []);
 
+  // Sync browser speech-to-text capture language preference dynamically
+  useEffect(() => {
+    if (recognitionRef.current) {
+      if (selectedLang === 'hi' || selectedLang === 'hinglish') {
+        recognitionRef.current.lang = 'hi-IN';
+      } else {
+        recognitionRef.current.lang = 'en-US';
+      }
+    }
+  }, [selectedLang]);
+
+  // Manage manual language preference selections & persistence
+  const handleLanguageChange = (newLang: 'en' | 'hi' | 'hinglish') => {
+    playTone('toggle');
+    setSelectedLang(newLang);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('aura_selected_lang', newLang);
+    }
+    setIsHindiMode(newLang === 'hi' || newLang === 'hinglish');
+    
+    // Dynamic welcome message updates for seamless localization
+    setMessages(prev => {
+      if (prev.length === 1 && prev[0].id === 'welcome-1') {
+        return [
+          {
+            ...prev[0],
+            text: getWelcomeText(newLang)
+          }
+        ];
+      }
+      return prev;
+    });
+  };
+
   // Listen to toggle trigger: Stop listening/synthesis when switching modes to keep clean states
   const handleToggleMode = (mode: 'voice' | 'text') => {
     playTone('toggle');
@@ -354,13 +510,19 @@ export default function AIVoiceSupport() {
     
     // Attempt to pick a premium high-quality voice
     const voices = window.speechSynthesis.getVoices();
-    const premiumVoice = voices.find(v => 
-      v.name.includes('Google US English') || 
-      v.name.includes('Google UK English Female') || 
-      v.name.includes('Daniel') || 
-      v.name.includes('Samantha') ||
-      v.lang.startsWith('en')
-    );
+    let premiumVoice;
+    if (selectedLang === 'hi' || selectedLang === 'hinglish') {
+      premiumVoice = voices.find(v => v.lang.startsWith('hi') || v.name.includes('Google हिन्दी') || v.name.includes('Lekha'));
+    }
+    if (!premiumVoice) {
+      premiumVoice = voices.find(v => 
+        v.name.includes('Google US English') || 
+        v.name.includes('Google UK English Female') || 
+        v.name.includes('Daniel') || 
+        v.name.includes('Samantha') ||
+        v.lang.startsWith('en')
+      );
+    }
     if (premiumVoice) {
       utterance.voice = premiumVoice;
     }
@@ -652,15 +814,18 @@ export default function AIVoiceSupport() {
     if (/[\u0900-\u097F]/.test(userInput)) {
       currentL = 'hi';
       setSelectedLang('hi');
+      localStorage.setItem('aura_selected_lang', 'hi');
       setIsHindiMode(true);
     } else if (englishMatches.some(m => textLow.includes(m))) {
       currentL = 'en';
       setSelectedLang('en');
+      localStorage.setItem('aura_selected_lang', 'en');
       setIsHindiMode(false);
     } else if (hindiMatches.some(m => textLow.includes(m))) {
       if (selectedLang === 'en') {
         currentL = 'hinglish';
         setSelectedLang('hinglish');
+        localStorage.setItem('aura_selected_lang', 'hinglish');
         setIsHindiMode(true);
       }
     }
@@ -1137,13 +1302,26 @@ export default function AIVoiceSupport() {
                 </div>
                 <div>
                   <h3 className="font-sans font-extrabold text-xs tracking-widest text-[#d7849a] uppercase leading-none">AURA</h3>
-                  <p className="text-[10px] text-[#d4af37] font-mono tracking-wider font-light mt-0.5 uppercase">Luxury Print Assistant</p>
+                  <p className="text-[10px] text-[#d4af37] font-mono tracking-wider font-light mt-0.5 uppercase">{t.subtitle}</p>
                 </div>
               </div>
 
               {/* Utility window control tags */}
               <div className="flex items-center gap-1.5">
                 
+                {/* Settings Toggle Button */}
+                <button
+                  onClick={() => {
+                    playTone('toggle');
+                    setIsSettingsOpen(!isSettingsOpen);
+                  }}
+                  className={`p-1.5 rounded-full hover:bg-white/5 text-neutral-400 hover:text-white transition-colors ${isSettingsOpen ? 'text-[#d4af37]' : ''}`}
+                  title="Aura Settings / Language"
+                  id="ai-settings-toggle-btn"
+                >
+                  <Settings className={`w-4 h-4 ${isSettingsOpen ? 'animate-spin' : ''}`} style={{ animationDuration: '3s' }} />
+                </button>
+
                 {/* Mute toggle button */}
                 <button
                   onClick={toggleSoundMute}
@@ -1177,11 +1355,135 @@ export default function AIVoiceSupport() {
             {/* Render collapsed minibar if isMinimized */}
             {!isMinimized && (
               <>
-                {/* 
-                  Smooth Slide Switch Navigation Selector
-                  This is the toggle UI control requested by the user.
-                  It transitions smoothly using Framer Motion layoutId.
-                */}
+                <AnimatePresence mode="wait">
+                  {isSettingsOpen ? (
+                    <motion.div
+                      key="aura-settings-container"
+                      initial={{ opacity: 0, scale: 0.96 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.96 }}
+                      transition={{ duration: 0.25 }}
+                      className="flex-grow p-5 overflow-y-auto custom-scrollbar flex flex-col justify-between bg-neutral-950/20"
+                      id="ai-settings-panel"
+                    >
+                      <div className="space-y-4">
+                        
+                        {/* Settings Title Section */}
+                        <div className="space-y-1">
+                          <h4 className="text-xs font-sans font-extrabold tracking-widest text-[#d4af37] uppercase">
+                            {t.settingsTitle}
+                          </h4>
+                          <p className="text-[11px] text-neutral-400 font-sans leading-relaxed">
+                            {t.descriptionText}
+                          </p>
+                        </div>
+
+                        {/* Language Selection Radios */}
+                        <div className="space-y-3 pt-2">
+                          <span className="text-[10px] font-mono tracking-widest text-[#d4af37] uppercase block">
+                            {t.selectLanguage}
+                          </span>
+                          
+                          <div className="space-y-2">
+                            
+                            {/* Option English */}
+                            <button
+                              type="button"
+                              onClick={() => handleLanguageChange('en')}
+                              className={`w-full p-3 rounded-xl flex items-center justify-between text-left transition-all duration-300 border font-sans group ${
+                                selectedLang === 'en'
+                                  ? 'bg-[#d4af37]/10 border-[#d4af37]/40 shadow-[0_4px_20px_rgba(212,175,55,0.08)]'
+                                  : 'bg-white/[0.02] border-white/[0.06] hover:bg-white/[0.04] hover:border-white/[0.12]'
+                              }`}
+                              id="settings-lang-en"
+                            >
+                              <div className="space-y-0.5">
+                                <span className={`text-xs font-bold transition-colors ${selectedLang === 'en' ? 'text-white' : 'text-neutral-300 group-hover:text-white'}`}>
+                                  {t.langEn}
+                                </span>
+                                <span className="text-[9px] text-neutral-500 font-mono block">English UI & AI responses</span>
+                              </div>
+                              <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${selectedLang === 'en' ? 'border-[#d4af37] bg-[#d4af37]' : 'border-neutral-600'}`}>
+                                {selectedLang === 'en' && <span className="w-1.5 h-1.5 rounded-full bg-black" />}
+                              </div>
+                            </button>
+
+                            {/* Option Hindi */}
+                            <button
+                              type="button"
+                              onClick={() => handleLanguageChange('hi')}
+                              className={`w-full p-3 rounded-xl flex items-center justify-between text-left transition-all duration-300 border font-sans group ${
+                                selectedLang === 'hi'
+                                  ? 'bg-[#d7849a]/10 border-[#d7849a]/40 shadow-[0_4px_20px_rgba(215,132,154,0.08)]'
+                                  : 'bg-white/[0.02] border-white/[0.06] hover:bg-white/[0.04] hover:border-white/[0.12]'
+                              }`}
+                              id="settings-lang-hi"
+                            >
+                              <div className="space-y-0.5">
+                                <span className={`text-xs font-bold transition-colors ${selectedLang === 'hi' ? 'text-white' : 'text-neutral-300 group-hover:text-white'}`}>
+                                  {t.langHi}
+                                </span>
+                                <span className="text-[9px] text-neutral-500 font-mono block">हिन्दी UI और AI उत्तर</span>
+                              </div>
+                              <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${selectedLang === 'hi' ? 'border-[#d7849a] bg-[#d7849a]' : 'border-neutral-600'}`}>
+                                {selectedLang === 'hi' && <span className="w-1.5 h-1.5 rounded-full bg-black" />}
+                              </div>
+                            </button>
+
+                            {/* Option Hinglish */}
+                            <button
+                              type="button"
+                              onClick={() => handleLanguageChange('hinglish')}
+                              className={`w-full p-3 rounded-xl flex items-center justify-between text-left transition-all duration-300 border font-sans group ${
+                                selectedLang === 'hinglish'
+                                  ? 'bg-[#d7849a]/10 border-[#d4af37]/35 shadow-[0_4px_20px_rgba(215,132,154,0.06)]'
+                                  : 'bg-white/[0.02] border-white/[0.06] hover:bg-white/[0.04] hover:border-white/[0.12]'
+                              }`}
+                              id="settings-lang-hinglish"
+                            >
+                              <div className="space-y-0.5">
+                                <span className={`text-xs font-bold transition-colors ${selectedLang === 'hinglish' ? 'text-white' : 'text-neutral-300 group-hover:text-white'}`}>
+                                  {t.langHing}
+                                </span>
+                                <span className="text-[9px] text-neutral-500 font-mono block">Hinglish UI & AI answers</span>
+                              </div>
+                              <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${selectedLang === 'hinglish' ? 'border-[#d4af37] bg-[#d4af37]' : 'border-neutral-600'}`}>
+                                {selectedLang === 'hinglish' && <span className="w-1.5 h-1.5 rounded-full bg-black" />}
+                              </div>
+                            </button>
+
+                          </div>
+                        </div>
+
+                      </div>
+
+                      {/* Back button save */}
+                      <button
+                        type="button"
+                        onClick={() => {
+                          playTone('success');
+                          setIsSettingsOpen(false);
+                        }}
+                        className="w-full mt-4 py-3 rounded-xl bg-gradient-to-tr from-[#d4af37] to-[#d7849a] text-black font-sans font-bold text-xs tracking-widest uppercase hover:scale-[1.02] active:scale-95 transition-all shadow-[0_4px_20px_rgba(215,132,154,0.3)] flex items-center justify-center gap-2 cursor-pointer"
+                        id="ai-settings-save-btn"
+                      >
+                        {t.saveBtn}
+                      </button>
+
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key="aura-chat-panel"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      className="flex flex-col flex-grow overflow-hidden"
+                    >
+                      {/* 
+                        Smooth Slide Switch Navigation Selector
+                        This is the toggle UI control requested by the user.
+                        It transitions smoothly using Framer Motion layoutId.
+                      */}
                 <div className="px-4 py-3 bg-neutral-950/40 border-b border-white/[0.04] flex items-center justify-center">
                   <div className="relative w-full max-w-[280px] h-[38px] p-0.5 rounded-full bg-white/[0.04] border border-white/[0.06] flex">
                     
@@ -1201,7 +1503,7 @@ export default function AIVoiceSupport() {
                       }`}
                     >
                       <Mic className="w-3.5 h-3.5" />
-                      Speak
+                      {t.speakTab}
                     </button>
 
                     {/* Text-Chat Tab option */}
@@ -1212,7 +1514,7 @@ export default function AIVoiceSupport() {
                       }`}
                     >
                       <MessageSquare className="w-3.5 h-3.5" />
-                      Type
+                      {t.typeTab}
                     </button>
 
                   </div>
@@ -1300,7 +1602,7 @@ export default function AIVoiceSupport() {
                               <Mic className="w-8 h-8 hover:text-[#d7849a] transition-colors" />
                             )}
                             <span className="text-[9px] uppercase font-bold tracking-widest mt-1 opacity-80 select-none">
-                              {isListening ? "Listening" : isSpeaking ? "Speaking" : "Tap Speak"}
+                              {isListening ? t.listeningLabel : isSpeaking ? t.speakingLabel : t.tapSpeakLabel}
                             </span>
                           </motion.button>
 
@@ -1352,7 +1654,7 @@ export default function AIVoiceSupport() {
                                 transition={{ repeat: Infinity, duration: 1.5 }}
                                 className="text-xs text-neutral-400 font-mono"
                               >
-                                Speak now. I am listening...
+                                {t.placeholderStatusListening}
                               </motion.p>
                             ) : isSpeaking ? (
                               <motion.p
@@ -1370,7 +1672,7 @@ export default function AIVoiceSupport() {
                                 animate={{ opacity: 0.8 }}
                                 className="text-[11px] text-neutral-400 tracking-wide font-light max-w-xs leading-relaxed"
                               >
-                                Tap the sphere and describe your vision. Tap again when done to print magic.
+                                {t.placeholderStatusStandby}
                               </motion.p>
                             )}
                           </AnimatePresence>
@@ -1388,7 +1690,7 @@ export default function AIVoiceSupport() {
                           {messages.length === 1 && !isCollecting && !priceEstimateActive ? (
                             <div className="w-full max-h-[140px] overflow-y-auto custom-scrollbar p-2 bg-white/[0.01] border border-white/[0.04] rounded-xl">
                               <p className="text-[8px] font-mono uppercase tracking-wider text-neutral-400 mb-1.5 text-center">
-                                Suggested Quick Actions (📍 Location, 💬 WhatsApp, etc):
+                                {t.quickActionTitle}
                               </p>
                               <div className="grid grid-cols-2 gap-1">
                                 <button
@@ -1481,7 +1783,7 @@ export default function AIVoiceSupport() {
                             </div>
                           ) : (
                             <div className="w-full text-center">
-                              <p className="text-[9px] tracking-widest text-[#d4af37] font-mono uppercase mb-1">Direct Premium Support</p>
+                              <p className="text-[9px] tracking-widest text-[#d4af37] font-mono uppercase mb-1">{t.directSupportTitle}</p>
                               <div className="flex justify-center gap-2">
                                 <button 
                                   onClick={() => handleBadgeClick("Can you create custom LED signs?")}
@@ -1539,7 +1841,7 @@ export default function AIVoiceSupport() {
                           {messages.length === 1 && !isCollecting && !priceEstimateActive && (
                             <div className="p-3 bg-white/[0.01] border border-white/[0.04] rounded-2xl my-2">
                               <p className="text-[9px] font-mono uppercase tracking-wider text-neutral-400 mb-2.5 text-center">
-                                💡 Direct Quick Suggestions (Auto-Chat Triggers):
+                                {t.suggestedTriggersTitle}
                               </p>
                               <div className="grid grid-cols-2 gap-1.5">
                                 <button
@@ -1656,19 +1958,19 @@ export default function AIVoiceSupport() {
                             onClick={() => handleBadgeClick("What is your custom box markup duration?")}
                             className="px-2.5 py-1 rounded-full bg-white/[0.02] border border-white/[0.05] hover:border-[#d7849a]/30 text-[9px] text-neutral-400 hover:text-white transition-all cursor-pointer whitespace-nowrap"
                           >
-                            🕒 Lead Times
+                            {t.leadTimesBadge}
                           </button>
                           <button 
                             onClick={() => handleBadgeClick("How do I contact premium sales partner?")}
                             className="px-2.5 py-1 rounded-full bg-white/[0.02] border border-white/[0.05] hover:border-[#d4af37]/30 text-[9px] text-neutral-400 hover:text-white transition-all cursor-pointer whitespace-nowrap"
                           >
-                            📞 Direct Sales
+                            {t.directSalesBadge}
                           </button>
                           <button 
                             onClick={() => handleBadgeClick("Can we customize corporate executive diaries?")}
                             className="px-2.5 py-1 rounded-full bg-white/[0.02] border border-white/[0.05] hover:border-white/20 text-[9px] text-neutral-400 hover:text-white transition-all cursor-pointer whitespace-nowrap"
                           >
-                            📔 Leather Diaries
+                            {t.leatherDiariesBadge}
                           </button>
                         </div>
 
@@ -1678,7 +1980,7 @@ export default function AIVoiceSupport() {
                             type="text"
                             value={inputText}
                             onChange={(e) => setInputText(e.target.value)}
-                            placeholder="Type premium brand custom specifications..."
+                            placeholder={t.inputPlaceholder}
                             className="flex-grow bg-white/[0.03] border border-white/[0.08] rounded-full px-4 py-2 text-xs text-white focus:outline-none focus:border-[#d7849a]/50 placeholder-neutral-500 transition-colors"
                             id="ai-text-input-field"
                           />
@@ -1697,7 +1999,10 @@ export default function AIVoiceSupport() {
                     )}
                   </AnimatePresence>
                 </div>
-              </>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </>
             )}
 
             {/* Collapsed view banner bar click opener */}
