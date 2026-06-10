@@ -25,11 +25,9 @@ export default function GalleryModal({ isOpen, onClose, service }: GalleryModalP
     };
   }, [isOpen]);
 
-  if (!service) return null;
-
   const handlePrevImage = (e?: React.MouseEvent) => {
     e?.stopPropagation();
-    if (activeLightboxIndex === null) return;
+    if (activeLightboxIndex === null || !service) return;
     setActiveLightboxIndex((prev) => 
       prev === 0 ? service.gallery.length - 1 : prev! - 1
     );
@@ -37,7 +35,7 @@ export default function GalleryModal({ isOpen, onClose, service }: GalleryModalP
 
   const handleNextImage = (e?: React.MouseEvent) => {
     e?.stopPropagation();
-    if (activeLightboxIndex === null) return;
+    if (activeLightboxIndex === null || !service) return;
     setActiveLightboxIndex((prev) => 
       prev === service.gallery.length - 1 ? 0 : prev! + 1
     );
@@ -57,7 +55,7 @@ export default function GalleryModal({ isOpen, onClose, service }: GalleryModalP
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [activeLightboxIndex, isOpen]);
+  }, [activeLightboxIndex, isOpen, service]);
 
   // Touch Swipe Handlers for mobile swipe support
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -77,6 +75,8 @@ export default function GalleryModal({ isOpen, onClose, service }: GalleryModalP
     }
     setTouchStart(null);
   };
+
+  if (!service) return null;
 
   return (
     <>
@@ -120,17 +120,47 @@ export default function GalleryModal({ isOpen, onClose, service }: GalleryModalP
             {/* Content Body */}
             <div className="px-6 py-12 max-w-7xl mx-auto w-full flex-grow">
               
+              {/* Category Visual Identity Cover Banner */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.98 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.7 }}
+                className="relative w-full h-[180px] sm:h-[240px] md:h-[320px] rounded-[24px] overflow-hidden mb-12 border border-white/10 shadow-2xl"
+              >
+                <img
+                  src={service.image}
+                  alt={service.title}
+                  className="w-full h-full object-cover brightness-[1.10]"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-[#000000]/70 via-black/30 to-transparent z-[1]" />
+                <div className="absolute bottom-6 left-6 right-6 z-[2] flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+                  <div className="space-y-1 sm:space-y-2">
+                    <span className="text-[9px] font-mono tracking-[0.25em] text-[#ff4773] uppercase font-black bg-[#000000]/75 backdrop-blur-md px-3.5 py-1 rounded-full border border-white/10 inline-block">
+                      Visual Standards
+                    </span>
+                    <h2 className="text-2xl sm:text-3xl md:text-4xl font-sans font-black text-white uppercase tracking-tight drop-shadow-[5px_5px_15px_rgba(0,0,0,0.85)]">
+                      {service.title}
+                    </h2>
+                  </div>
+                  <div className="text-left sm:text-right bg-[#000000]/50 backdrop-blur-md px-4 py-2 rounded-2xl border border-white/5 inline-block self-start sm:self-auto">
+                    <p className="text-[9px] font-mono tracking-widest text-neutral-300 uppercase">Interactive Exhibition</p>
+                    <p className="text-base font-display font-extrabold text-[#ffd744]">{service.gallery.length} Masterpiece Prints</p>
+                  </div>
+                </div>
+              </motion.div>
+
               {/* Long description briefing */}
               <motion.div
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
+                transition={{ duration: 0.6, delay: 0.1 }}
                 className="max-w-3xl mb-12"
               >
-                <h4 className="text-xs font-mono text-gold-400 uppercase tracking-[0.2em] mb-2">
+                <h4 className="text-xs font-mono text-[#ffd744] uppercase tracking-[0.25em] font-black mb-3">
                   Precision Craft Description
                 </h4>
-                <p className="text-neutral-300 font-light leading-relaxed text-base sm:text-lg">
+                <p className="text-neutral-200 font-normal leading-relaxed text-base sm:text-lg">
                   {service.longDescription}
                 </p>
               </motion.div>

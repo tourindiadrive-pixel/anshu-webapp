@@ -12,7 +12,7 @@ export default function Testimonials() {
       role: 'Marketing Director, Zephyr Co.',
       rating: 5,
       review: 'The LED glowboard signage Anshu delivered for our head office is spectacular. Our clients always remark on its precise backlighting alignment. The fit and finish are absolutely world-class.',
-      image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&h=150&q=80'
+      image: 'https://picsum.photos/seed/reviewer_anirudh/150/150'
     },
     {
       id: 'test-2',
@@ -21,7 +21,7 @@ export default function Testimonials() {
       role: 'Private Curator',
       rating: 5,
       review: 'For our wedding envelopes, we specifically requested premium deckled cardstock with heavy gold-foil initials. The craftsmanship from Anshu exceeded all wedding stationery expectation. Highly recommended!',
-      image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&h=150&q=80'
+      image: 'https://picsum.photos/seed/reviewer_meera/150/150'
     },
     {
       id: 'test-3',
@@ -30,7 +30,7 @@ export default function Testimonials() {
       role: 'Operations Lead, Apex Tech',
       rating: 5,
       review: 'Our corporate Welcome Hampers are highly personalized. Anshu designed smart water bottles carrying perfect laser-engraved names. Delivery was incredibly swift, and the packaging box is premium quality.',
-      image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&h=150&q=80'
+      image: 'https://picsum.photos/seed/reviewer_rohan/150/150'
     },
     {
       id: 'test-4',
@@ -39,7 +39,7 @@ export default function Testimonials() {
       role: 'Restaurateur, The Ivory Table',
       rating: 5,
       review: 'We ordered heat-debossed leather menu folders and custom acrylic panel decor. The deep-textured branding aligns perfectly with our luxury aesthetics. Anshu truly turns magic into tangible elements.',
-      image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=150&h=150&q=80'
+      image: 'https://picsum.photos/seed/reviewer_siddharth/150/150'
     }
   ];
 
