@@ -14,6 +14,7 @@ import Testimonials from './components/Testimonials';
 import Process from './components/Process';
 import Contact from './components/Contact';
 import FloatingWhatsApp from './components/FloatingWhatsApp';
+import AIVoiceSupport from './components/AIVoiceSupport';
 import ScrollProgress from './components/ScrollProgress';
 import Footer from './components/Footer';
 import EnquiriesList from './components/EnquiriesList';
@@ -162,6 +163,9 @@ export default function App() {
 
       {/* Persistent Floating WhatsApp quickconnect */}
       <FloatingWhatsApp />
+
+      {/* Aura AI Design Consulting with Voice and Chat support features */}
+      <AIVoiceSupport />
 
       {/* Circular Gold Gradient Scroll Progress Indicator */}
       <ScrollProgress />

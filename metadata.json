@@ -1,6 +1,6 @@
 {
   "name": "Anshu - Premium Luxury Print & Signage",
   "description": "From luxury neon signage to premium corporate gifting, we turn your vision into tangible perfection.",
-  "requestFramePermissions": [],
+  "requestFramePermissions": ["microphone"],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }
