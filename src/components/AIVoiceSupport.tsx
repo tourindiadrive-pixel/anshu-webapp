@@ -13,7 +13,10 @@ import {
   CornerDownLeft,
   Minimize2,
   Maximize2,
-  Settings
+  Settings,
+  Globe,
+  ChevronDown,
+  Check
 } from 'lucide-react';
 
 interface ChatMessage {
@@ -333,7 +336,22 @@ export default function AIVoiceSupport() {
     return false;
   });
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [isLangDropdownOpen, setIsLangDropdownOpen] = useState(false);
+  const langDropdownRef = useRef<HTMLDivElement>(null);
   const t = UI_TRANSLATIONS[selectedLang];
+
+  // Close dropdown on click outside
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (langDropdownRef.current && !langDropdownRef.current.contains(event.target as Node)) {
+        setIsLangDropdownOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   // Pre-chat quick actions and price estimate flows
   const [printingOptionsActive, setPrintingOptionsActive] = useState(false);
@@ -1309,6 +1327,129 @@ export default function AIVoiceSupport() {
               {/* Utility window control tags */}
               <div className="flex items-center gap-1.5">
                 
+                {/* Sleek Animated Dropdown Menu for Languages */}
+                <div className="relative" ref={langDropdownRef}>
+                  <button
+                    onClick={() => {
+                      playTone('tap');
+                      setIsLangDropdownOpen(!isLangDropdownOpen);
+                    }}
+                    className="flex items-center gap-1.5 px-2 py-1 rounded-full bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.08] hover:border-white/[0.15] text-[10px] text-neutral-300 hover:text-white transition-all font-mono uppercase tracking-wider relative"
+                    title="Change language preference"
+                    id="ai-lang-dropdown-trigger"
+                  >
+                    <Globe className="w-3.5 h-3.5 text-[#d4af37]" />
+                    <span className="font-bold tracking-normal">{selectedLang === 'hinglish' ? 'HING' : selectedLang.toUpperCase()}</span>
+                    
+                    {/* Glowing status indicator for selected language */}
+                    <span className="relative flex h-1.5 w-1.5">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#d4af37] opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#d4af37]"></span>
+                    </span>
+                    
+                    <ChevronDown className={`w-3 h-3 text-neutral-400 transition-transform duration-300 ${isLangDropdownOpen ? 'rotate-180' : ''}`} />
+                  </button>
+
+                  <AnimatePresence>
+                    {isLangDropdownOpen && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                        transition={{ duration: 0.2, ease: "easeOut" }}
+                        className="absolute right-0 mt-1.5 w-44 rounded-xl bg-[#121212]/98 backdrop-blur-md border border-white/[0.08] shadow-[0_10px_30px_rgba(0,0,0,0.5)] z-50 p-1 divide-y divide-white/[0.04]"
+                        id="ai-lang-dropdown-menu"
+                      >
+                        <div className="py-1">
+                          {/* Option English */}
+                          <button
+                            type="button"
+                            onClick={() => {
+                              handleLanguageChange('en');
+                              setIsLangDropdownOpen(false);
+                            }}
+                            className="w-full px-2.5 py-1.5 rounded-lg flex items-center justify-between text-left hover:bg-white/[0.05] transition-colors group"
+                            id="dropdown-lang-en"
+                          >
+                            <div className="flex items-center gap-2">
+                              <span className="text-[10px] font-bold text-neutral-300 group-hover:text-white transition-colors">
+                                English
+                              </span>
+                              {selectedLang === 'en' && (
+                                <span className="flex h-1.5 w-1.5">
+                                  <span className="animate-ping absolute inline-flex h-1.5 w-1.5 rounded-full bg-[#d4af37] opacity-75"></span>
+                                  <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#d4af37]"></span>
+                                </span>
+                              )}
+                            </div>
+                            {selectedLang === 'en' ? (
+                              <Check className="w-3.5 h-3.5 text-[#d4af37]" />
+                            ) : (
+                              <span className="text-[9px] text-neutral-500 font-mono select-none">EN</span>
+                            )}
+                          </button>
+
+                          {/* Option Hindi */}
+                          <button
+                            type="button"
+                            onClick={() => {
+                              handleLanguageChange('hi');
+                              setIsLangDropdownOpen(false);
+                            }}
+                            className="w-full px-2.5 py-1.5 rounded-lg flex items-center justify-between text-left hover:bg-white/[0.05] transition-colors group"
+                            id="dropdown-lang-hi"
+                          >
+                            <div className="flex items-center gap-2">
+                              <span className="text-[10px] font-bold text-neutral-300 group-hover:text-white transition-colors">
+                                हिन्दी (Hindi)
+                              </span>
+                              {selectedLang === 'hi' && (
+                                <span className="flex h-1.5 w-1.5">
+                                  <span className="animate-ping absolute inline-flex h-1.5 w-1.5 rounded-full bg-[#d7849a] opacity-75"></span>
+                                  <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#d7849a]"></span>
+                                </span>
+                              )}
+                            </div>
+                            {selectedLang === 'hi' ? (
+                              <Check className="w-3.5 h-3.5 text-[#d7849a]" />
+                            ) : (
+                              <span className="text-[9px] text-neutral-500 font-mono select-none">HI</span>
+                            )}
+                          </button>
+
+                          {/* Option Hinglish */}
+                          <button
+                            type="button"
+                            onClick={() => {
+                              handleLanguageChange('hinglish');
+                              setIsLangDropdownOpen(false);
+                            }}
+                            className="w-full px-2.5 py-1.5 rounded-lg flex items-center justify-between text-left hover:bg-white/[0.05] transition-colors group"
+                            id="dropdown-lang-hinglish"
+                          >
+                            <div className="flex items-center gap-2">
+                              <span className="text-[10px] font-bold text-neutral-300 group-hover:text-white transition-colors">
+                                Hinglish
+                              </span>
+                              {selectedLang === 'hinglish' && (
+                                <span className="flex h-1.5 w-1.5">
+                                  <span className="animate-ping absolute inline-flex h-1.5 w-1.5 rounded-full bg-[#d4af37] opacity-75"></span>
+                                  <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#d4af37]"></span>
+                                </span>
+                              )}
+                            </div>
+                            {selectedLang === 'hinglish' ? (
+                              <Check className="w-3.5 h-3.5 text-[#d4af37]" />
+                            ) : (
+                              <span className="text-[9px] text-neutral-500 font-mono select-none">HING</span>
+                            )}
+                          </button>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+
                 {/* Settings Toggle Button */}
                 <button
                   onClick={() => {
