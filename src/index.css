@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Alex+Brush&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Playfair Display", Georgia, serif;
+  --font-script: "Alex Brush", cursive;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  
+  --color-gold-50: #fef7fa;
+  --color-gold-100: #fdeef2;
+  --color-gold-200: #fad3dd;
+  --color-gold-300: #f4a6ba;
+  --color-gold-400: #e98fa7;
+  --color-gold-500: #d9869d;
+  --color-gold-600: #ca5e7e;
+  --color-gold-700: #b24364;
+  --color-gold-800: #94334f;
+  --color-gold-900: #7c2c43;
+  
+  --animate-marquee: marquee 30s linear infinite;
+  --animate-pulse-slow: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  
+  @keyframes marquee {
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(-50%); }
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    background-color: #000000;
+    color: #e5e5e7;
+  }
+  
+  /* Luxury Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #000000;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #1c1c1f;
+    border-radius: 4px;
+    border: 2px solid #000000;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #d9869d;
+  }
+}
+
+@layer utilities {
+  .text-glow {
+    text-shadow: 0 0 15px rgba(217, 134, 157, 0.4);
+  }
+  
+  .border-glow {
+    box-shadow: 0 0 15px rgba(217, 134, 157, 0.2);
+  }
+  
+  .glass-card {
+    background: rgba(15, 15, 18, 0.85);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(217, 134, 157, 0.15);
+  }
+  
+  .glass-card-gold {
+    background: rgba(15, 15, 18, 0.9);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(217, 134, 157, 0.25);
+  }
+
+  .neon-gold-glow {
+    box-shadow: 0 0 25px rgba(217, 134, 157, 0.25);
+  }
+
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}

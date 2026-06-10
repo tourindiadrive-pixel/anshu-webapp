@@ -1,0 +1,151 @@
+import React from 'react';
+import { motion } from 'motion/react';
+import { ChevronDown } from 'lucide-react';
+import LineWaves from './LineWaves';
+
+export default function Hero() {
+  const handleActionClick = (targetId: string) => {
+    const target = document.getElementById(targetId);
+    if (target) {
+      const offset = 80;
+      const bodyRect = document.body.getBoundingClientRect().top;
+      const targetRect = target.getBoundingClientRect().top;
+      const offsetPosition = targetRect - bodyRect - offset;
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    }
+  };
+
+  // Referencing the magnificent photorealistic chocolate fluid waves banner generated earlier
+  const bannerBgUrl = '/src/assets/images/luxe_banner_bg_1781059495838.png';
+
+  return (
+    <section 
+      id="home" 
+      className="relative min-h-screen flex flex-col justify-center items-center overflow-hidden bg-[#000000] pt-24 pb-16 px-0"
+    >
+      {/* Subtle background ambient circles */}
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[30rem] h-[30rem] bg-[#d9869d]/5 rounded-full blur-[120px] pointer-events-none select-none" />
+
+      {/* Symmetrical framing lines for extreme luxury visual structure */}
+      <div className="absolute left-14 top-0 bottom-0 w-[1px] bg-white/[0.02] hidden xl:block pointer-events-none z-10" />
+      <div className="absolute right-14 top-0 bottom-0 w-[1px] bg-white/[0.02] hidden xl:block pointer-events-none z-10" />
+
+      {/* 
+        Horizontal Widescreen Banner Band (Centered)
+        Spans left edge to right edge of screen, fully aligned with the uploaded image layout!
+      */}
+      <div className="w-full relative py-20 sm:py-24 md:py-28 border-y border-[#d9869d]/30 overflow-hidden flex items-center justify-center">
+        {/* Background texture overlay */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center transition-transform duration-[10s] scale-102 hover:scale-105"
+          style={{ backgroundImage: `url(${bannerBgUrl})` }}
+        />
+        
+        {/* Interactive LineWaves dynamic visual effect */}
+        <div className="absolute inset-0 z-[1] opacity-20 pointer-events-none mix-blend-color-dodge">
+          <LineWaves
+            speed={0.25}
+            innerLineCount={32}
+            outerLineCount={36}
+            warpIntensity={0.8}
+            rotation={-30}
+            edgeFadeWidth={0.15}
+            colorCycleSpeed={0.4}
+            brightness={0.35}
+            color1="#d9869d"
+            color2="#d4af37"
+            color3="#ffffff"
+            enableMouseInteraction={true}
+            mouseInfluence={2.5}
+          />
+        </div>
+
+        {/* Deep, satin dark shade overlay */}
+        <div className="absolute inset-0 bg-neutral-950/20 backdrop-blur-[0.5px] pointer-events-none" />
+
+
+        {/* Banner content centered vertically and horizontally */}
+        <div className="relative z-10 max-w-7xl mx-auto px-6 text-center select-none">
+          <motion.h1
+            initial={{ opacity: 0, y: 40, filter: 'blur(10px)' }}
+            animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+            transition={{ 
+              delay: 0.2, 
+              duration: 1.4, 
+              ease: [0.16, 1, 0.3, 1] 
+            }}
+            className="font-sans font-extrabold text-white text-4.5xl sm:text-6xl md:text-7.5xl lg:text-8xl tracking-[0.25em] md:tracking-[0.3em] uppercase leading-none drop-shadow-2xl"
+          >
+            BRING YOUR IDEAS
+          </motion.h1>
+          
+          <motion.span
+            initial={{ opacity: 0, y: 30, scale: 0.96, filter: 'blur(5px)' }}
+            animate={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
+            transition={{ 
+              delay: 0.55, 
+              duration: 1.6, 
+              ease: [0.16, 1, 0.3, 1] 
+            }}
+            className="font-script text-4xl sm:text-6.5xl md:text-8xl lg:text-9xl text-[#d9869d] mt-5 md:mt-7 block tracking-normal normal-case leading-none italic text-glow drop-shadow-lg"
+          >
+            We Print Magic
+          </motion.span>
+        </div>
+      </div>
+
+      {/* 
+        Description area on black background below the banner band 
+      */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.85, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+        className="relative z-10 max-w-4xl mx-auto text-center px-6 mt-12 sm:mt-16"
+      >
+        <p className="text-sm sm:text-base md:text-lg text-neutral-400 font-light tracking-wide leading-relaxed max-w-2xl mx-auto">
+          From luxury neon signage to premium corporate gifting,<br />
+          we turn your vision into tangible perfection.
+        </p>
+
+        {/* 
+          Double Custom Pill Buttons with Luxury Highlight Hover 
+        */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mt-10 md:mt-12">
+          {/* View portfolio button */}
+          <button
+            onClick={() => handleActionClick('services')}
+            className="w-full sm:w-auto px-10 py-4 rounded-full border border-neutral-800 text-white font-sans font-bold text-xs tracking-[0.2em] uppercase bg-transparent transition-all duration-300 hover:border-[#d9869d] hover:text-[#d9869d] hover:scale-105 hover:shadow-[0_0_20px_rgba(217,134,157,0.2)] focus:outline-none cursor-pointer"
+            id="hero-view-portfolio-btn"
+          >
+            View Portfolio
+          </button>
+
+          {/* Start Project filled button */}
+          <button
+            onClick={() => handleActionClick('contact')}
+            className="w-full sm:w-auto px-10 py-4 rounded-full border border-[#d9869d] bg-[#d9869d] text-neutral-950 font-sans font-extrabold text-xs tracking-[0.2em] uppercase transition-all duration-300 hover:bg-[#ca5e7e] hover:border-[#ca5e7e] hover:scale-105 hover:shadow-[0_0_25px_rgba(217,134,157,0.5)] focus:outline-none cursor-pointer"
+            id="hero-start-project-btn"
+          >
+            START YOUR PROJECT
+          </button>
+        </div>
+
+        {/* Animated bounce downdrive arrow */}
+        <motion.div 
+          onClick={() => handleActionClick('about')}
+          animate={{ y: [0, 8, 0] }}
+          transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+          className="inline-flex items-center justify-center mt-12 sm:mt-16 text-neutral-500 hover:text-[#d9869d] transition-colors cursor-pointer p-2 rounded-full"
+          title="Explore Collections"
+          id="hero-scroll-indicator"
+        >
+          <ChevronDown className="w-8 h-8 md:w-10 md:h-10" strokeWidth={1.5} />
+        </motion.div>
+      </motion.div>
+    </section>
+  );
+}
