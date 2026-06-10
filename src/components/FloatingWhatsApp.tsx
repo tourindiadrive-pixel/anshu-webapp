@@ -49,7 +49,7 @@ export default function FloatingWhatsApp() {
       href="https://wa.me/919999999999?text=Hi%20Anshu!%20I'm%20interested%20in%20your%20premium%20printing%20services.%20Can%20we%20connect?"
       target="_blank"
       rel="noreferrer"
-      className="fixed bottom-6 right-6 z-40 group flex items-center justify-center p-4 rounded-full bg-[#d9869d] text-white hover:bg-[#ca5e7e] hover:scale-110 active:scale-95 transition-all duration-300 shadow-[0_4px_20px_rgba(217,134,157,0.5)] focus:outline-none focus:ring-2 focus:ring-[#d9869d] focus:ring-offset-2 focus:ring-offset-[#000000]"
+      className="fixed bottom-6 right-6 z-40 group hidden sm:flex items-center justify-center p-4 rounded-full bg-[#d9869d] text-white hover:bg-[#ca5e7e] hover:scale-110 active:scale-95 transition-all duration-300 shadow-[0_4px_20px_rgba(217,134,157,0.5)] focus:outline-none focus:ring-2 focus:ring-[#d9869d] focus:ring-offset-2 focus:ring-offset-[#000000]"
       title="Contact on WhatsApp"
       id="floating-whatsapp"
     >

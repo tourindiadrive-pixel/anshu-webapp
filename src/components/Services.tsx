@@ -124,32 +124,32 @@ export default function Services({ onSelectService }: ServicesProps) {
                 transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] }
               }}
               onClick={() => onSelectService(service)}
-              className="group relative rounded-[28px] glass-card hover:glass-card-gold hover:border-[#d9869d]/60 hover:shadow-[0_0_30px_rgba(217,134,157,0.3)] transition-all duration-500 ease-out cursor-pointer flex flex-col justify-center h-[360px] shadow-[0_15px_35px_rgba(0,0,0,0.9)]"
+              className="group relative rounded-[28px] glass-card hover:glass-card-gold hover:border-[#ff4773]/80 hover:shadow-[0_0_35px_rgba(255,71,115,0.45)] transition-all duration-500 ease-out cursor-pointer flex flex-col justify-center h-[360px] shadow-[0_15px_35px_rgba(0,0,0,0.95)]"
               id={`service-card-${service.id}`}
             >
               <div className="flex flex-col items-center justify-center text-center p-8 space-y-6 h-full">
-                {/* Center Aligned Icon */}
-                <div className="w-16 h-16 rounded-full bg-[#d9869d]/5 border border-[#d9869d]/30 flex items-center justify-center text-[#d9869d] shadow-[0_0_15px_rgba(217,134,157,0.15)] group-hover:scale-110 group-hover:bg-[#d9869d]/10 transition-all duration-300">
+                {/* Center Aligned Icon with brighter colors */}
+                <div className="w-16 h-16 rounded-full bg-[#ff4773]/10 border-2 border-[#ff4773]/45 flex items-center justify-center text-[#ff4773] shadow-[0_0_20px_rgba(255,71,115,0.3)] group-hover:scale-110 group-hover:bg-[#ff4773]/20 transition-all duration-300">
                   {getServiceIcon(service.id)}
                 </div>
 
-                {/* Service Name & Description */}
+                {/* Service Name & Higher contrast Description */}
                 <div className="space-y-2">
-                  <h3 className="text-xl font-sans font-bold text-white group-hover:text-[#d9869d] transition-colors duration-300">
+                  <h3 className="text-xl font-sans font-bold text-white group-hover:text-[#ff4773] transition-colors duration-300">
                     {service.title}
                   </h3>
-                  <p className="text-sm font-light text-neutral-450 leading-relaxed line-clamp-3">
+                  <p className="text-sm font-normal text-neutral-200 group-hover:text-white leading-relaxed line-clamp-3 transition-colors duration-300">
                     {service.description}
                   </p>
                 </div>
 
-                {/* Pink Outline Button */}
+                {/* Vivid Crimson/Pink Outline Button with high visual resonance */}
                 <button 
                   onClick={(e) => {
                     e.stopPropagation();
                     onSelectService(service);
                   }}
-                  className="px-6 py-2.5 rounded-full border border-[#d9869d] text-[#d9869d] bg-transparent font-mono font-bold text-xs tracking-wider uppercase transition-all duration-300 hover:bg-[#d9869d] hover:text-[#000000] hover:shadow-[0_0_15px_rgba(217,134,157,0.4)] focus:outline-none focus:ring-2 focus:ring-[#d9869d] focus:ring-offset-2 focus:ring-offset-[#0f0f12] transform scale-95 group-hover:scale-100 opacity-80 group-hover:opacity-100"
+                  className="px-6 py-2.5 rounded-full border border-[#ff4773] text-[#ff4773] bg-transparent font-mono font-bold text-xs tracking-wider uppercase transition-all duration-300 hover:bg-[#ff4773] hover:text-[#000000] hover:scale-105 hover:shadow-[0_0_20px_rgba(255,71,115,0.55)] focus:outline-none focus:ring-2 focus:ring-[#ff4773] focus:ring-offset-2 focus:ring-offset-[#0f0f12] transform scale-100 opacity-95 group-hover:opacity-100"
                 >
                   Open Gallery
                 </button>

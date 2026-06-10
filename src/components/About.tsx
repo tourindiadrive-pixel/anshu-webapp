@@ -1,221 +1,118 @@
-import React, { useState, useEffect } from 'react';
-import { motion, useInView } from 'motion/react';
-import { Truck, Sparkles, Check, BookmarkCheck, Inbox, ShieldCheck } from 'lucide-react';
-
-interface CounterProps {
-  end: number;
-  suffix?: string;
-}
-
-function Counter({ end, suffix = '' }: CounterProps) {
-  const [count, setCount] = useState(0);
-  const ref = React.useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.5 });
-
-  useEffect(() => {
-    if (!isInView) return;
-
-    let start = 0;
-    const duration = 2000;
-    const increment = end / (duration / 16);
-    let timer: NodeJS.Timeout;
-
-    const updateCounter = () => {
-      start += increment;
-      if (start >= end) {
-        setCount(end);
-      } else {
-        setCount(Math.floor(start));
-        timer = setTimeout(updateCounter, 16);
-      }
-    };
-
-    updateCounter();
-    return () => clearTimeout(timer);
-  }, [isInView, end]);
-
-  return (
-    <span ref={ref} className="font-display font-bold text-4xl sm:text-5xl text-glow bg-gradient-to-r from-gold-300 to-amber-500 bg-clip-text text-transparent">
-      {count}
-      {suffix}
-    </span>
-  );
-}
+import React from 'react';
+import { motion } from 'motion/react';
+// @ts-ignore
+import anshuPhoto from '../assets/images/anshu_founder_studio_1781076053118.png';
 
 export default function About() {
-  const features = [
-    {
-      icon: <Truck className="w-5 h-5 text-gold-400" />,
-      title: 'Pan India Shipping',
-      description: 'Fully tracked direct cargo dispatch systems nationwide.'
-    },
-    {
-      icon: <Sparkles className="w-5 h-5 text-gold-400" />,
-      title: 'On-Time Delivery',
-      description: 'Rigorous job schedules ensure no project delay.'
-    },
-    {
-      icon: <Inbox className="w-5 h-5 text-gold-400" />,
-      title: 'Low MOQ',
-      description: 'Unlocking custom manufacturing even for singular items.'
-    }
-  ];
-
   return (
-    <section id="about" className="relative py-24 sm:py-32 bg-neutral-900/50 overflow-hidden">
-      {/* Decorative accent backgrounds */}
-      <div className="absolute top-[10%] right-[-10%] w-[30rem] h-[30rem] bg-amber-600/5 rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute bottom-[10%] left-[-10%] w-[30rem] h-[30rem] bg-gold-600/5 rounded-full blur-[140px] pointer-events-none" />
+    <section id="about" className="relative py-20 sm:py-28 bg-[#000000] overflow-hidden">
+      {/* 25% More luminous peach/pinkish and golden background glow */}
+      <div className="absolute top-[20%] left-[-10%] w-[40rem] h-[40rem] bg-[#ff4773]/12 rounded-full blur-[160px] pointer-events-none" />
+      <div className="absolute bottom-[20%] right-[-10%] w-[40rem] h-[40rem] bg-[#ffd744]/12 rounded-full blur-[160px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           
-          {/* Left Text Column */}
-          <div className="lg:col-span-7 space-y-8">
-            <div className="space-y-3">
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-                className="flex items-center space-x-2"
-              >
-                <div className="h-[1px] w-8 bg-gold-500" />
-                <span className="text-xs font-mono text-gold-400 uppercase tracking-[0.25em] font-semibold">
-                  Who We Are
-                </span>
-              </motion.div>
-              
-              <motion.h2
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: 0.1 }}
-                className="text-3xl sm:text-5xl font-sans font-bold text-white tracking-tight leading-tight"
-              >
-                Crafting Memories, <br />
-                <span className="font-script text-3xl sm:text-5xl text-gold-400 block mt-2 tracking-normal normal-case text-glow">"One Print at a Time"</span>
-              </motion.h2>
-            </div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="space-y-6 text-neutral-400 font-light leading-relaxed text-base sm:text-lg"
-            >
-              <p>
-                At <span className="text-white font-medium">Anshu</span>, we believe printing isn’t just about applying ink to a surface — it's about giving your thoughts shape, texture, and brilliance. We treat each signage piece, box layer, and custom fabric like a masterpiece.
-              </p>
-              <p>
-                Whether you are an ambitious brand looking to establish architectural LED presence, or custom ordering personalized stationery for your high-profile event, we employ state-of-the-art curing and laser routing engines to maintain absolute precision.
-              </p>
-            </motion.div>
-
-            {/* Feature Highlights List */}
+          {/* Left Column: Image wrapper with floating Yrs of Excellence card */}
+          <div className="lg:col-span-5 relative flex justify-center lg:justify-start">
             <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-4"
+              transition={{ duration: 0.8 }}
+              className="relative rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.95)] border border-white/10 max-w-[400px] w-full aspect-[4/5]"
             >
-              {features.map((feat, index) => (
-                <div 
-                  key={index} 
-                  className="p-5 rounded-xl bg-neutral-950/60 border border-white/5 hover:border-gold-500/20 hover:bg-neutral-950/90 transition-all duration-300"
-                >
-                  <div className="w-9 h-9 rounded-lg bg-gold-500/10 flex items-center justify-center mb-3">
-                    {feat.icon}
-                  </div>
-                  <h4 className="text-white font-semibold text-sm tracking-wide mb-1">
-                    {feat.title}
-                  </h4>
-                  <p className="text-xs text-neutral-500 leading-relaxed">
-                    {feat.description}
-                  </p>
-                </div>
-              ))}
+              <img 
+                src={anshuPhoto} 
+                alt="Anshu - Founder of Premium Printing Studio" 
+                className="w-full h-full object-cover brightness-[1.1]"
+                referrerPolicy="no-referrer"
+              />
+              
+              {/* Badge: 5+ Yrs Crafting Excellence - 25% more vivid border */}
+              <div className="absolute bottom-5 right-5 bg-[#111115]/95 backdrop-blur-md border-2 border-[#ffd744] rounded-2xl p-4 min-w-[130px] text-center shadow-2xl">
+                <span className="block font-sans font-extrabold text-2xl lg:text-3xl text-transparent bg-clip-text bg-gradient-to-r from-[#ffd744] via-[#fdf5cc] to-[#f5c71a]">
+                  5+ Yrs
+                </span>
+                <span className="block font-sans text-[10px] tracking-wider text-neutral-200 font-extrabold uppercase mt-1 animate-pulse">
+                  Crafting Excellence
+                </span>
+              </div>
             </motion.div>
           </div>
 
-          {/* Right Cards Column */}
-          <div className="lg:col-span-5 relative">
-            <div className="relative space-y-6 z-10">
+          {/* Right Column: Owner Story narrative block */}
+          <div className="lg:col-span-7 space-y-7 text-left w-full overflow-hidden">
+            <div className="space-y-4">
+              <span className="text-xs font-mono font-black text-[#ffd744] uppercase tracking-[0.25em] block">
+                WHO I AM
+              </span>
               
-              {/* Card 1: Years of Executing excellence */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, ease: "easeOut" }}
-                className="p-8 rounded-2xl glass-card-gold relative overflow-hidden group shadow-xl"
-              >
-                {/* Accent pattern background inside Card */}
-                <span className="absolute top-0 right-0 w-24 h-24 bg-gold-500/5 rounded-full blur-xl pointer-events-none group-hover:bg-gold-500/10 transition-colors" />
-                
-                <div className="flex items-center space-x-6">
-                  <div className="w-14 h-14 rounded-xl bg-gold-500/10 flex items-center justify-center border border-gold-500/25">
-                    <BookmarkCheck className="w-7 h-7 text-gold-400" />
-                  </div>
-                  <div>
-                    <div className="flex items-baseline space-x-1">
-                      <Counter end={5} suffix="+" />
-                    </div>
-                    <p className="text-sm font-medium text-neutral-400 tracking-wider uppercase mt-1">
-                      YEARS OF EXCELLENCE
-                    </p>
-                  </div>
-                </div>
-                <p className="text-xs text-neutral-500 font-light mt-4 leading-relaxed">
-                  Deep technical expertise matching global standard substrates and custom neon layouts.
-                </p>
-              </motion.div>
-
-              {/* Card 2: 100% Quality Guarantee */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: 0.15, ease: "easeOut" }}
-                className="p-8 rounded-2xl glass-card relative overflow-hidden group shadow-xl"
-              >
-                <div className="flex items-center space-x-6">
-                  <div className="w-14 h-14 rounded-xl bg-gold-500/10 flex items-center justify-center border border-white/10">
-                    <ShieldCheck className="w-7 h-7 text-gold-400" />
-                  </div>
-                  <div>
-                    <div className="flex items-baseline space-x-1">
-                      <Counter end={100} suffix="%" />
-                    </div>
-                    <p className="text-sm font-medium text-neutral-400 tracking-wider uppercase mt-1">
-                      QUALITY GUARANTEE
-                    </p>
-                  </div>
-                </div>
-                <p className="text-xs text-neutral-500 font-light mt-4 leading-relaxed">
-                  Rigorous spot-checks and luxury finish ensures only absolute perfection reaches you.
-                </p>
-              </motion.div>
-
-              {/* Luxury Stamp/Slogan badge underneath */}
-              <motion.div
-                initial={{ opacity: 0, y: 15 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: 0.3 }}
-                className="flex items-center justify-center space-x-3 p-4 rounded-xl bg-neutral-950/40 border border-white/5"
-              >
-                <Check className="w-4 h-4 text-gold-400" />
-                <span className="text-xs font-mono text-neutral-400 tracking-wider">
-                  Guaranteed compliance with Pantone Color Standards
+              <h2 className="text-[22px] sm:text-[26px] lg:text-[35px] font-display font-extrabold text-white tracking-tight leading-[1.12]">
+                Crafting Memories, <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff4773] via-[#ff7da0] to-[#ffd744] text-glow">
+                  One Print at a Time.
                 </span>
-              </motion.div>
+              </h2>
             </div>
 
-            {/* Glowing background bubble behind stats cards */}
-            <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 w-72 h-72 bg-gradient-to-r from-gold-500/10 to-amber-500/5 rounded-full blur-3xl -z-10 pointer-events-none" />
+            <div className="space-y-5 text-neutral-250 font-normal leading-relaxed text-base sm:text-lg">
+              <p>
+                Hi, I'm <strong className="text-[#ffd744] font-extrabold font-sans">Anshu</strong> — founder of this premium printing studio. I don't just put ink on materials; I breathe life into your ideas. Founded with a passion for precision and an eye for luxury, I specialize in high-end customization that stands out.
+              </p>
+              <p>
+                From the intricate details of UV printing to the glow of neon signage, every project is treated as a masterpiece. My mission is to provide businesses and individuals with premium printing solutions that leave a lasting impression.
+              </p>
+            </div>
+
+            {/* Checklist elements - Higher opacity with crisp white text */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-white/10">
+              
+              {/* Point 1 */}
+              <div className="flex items-center space-x-3">
+                <div className="flex-shrink-0">
+                  <svg className="w-5 h-5 text-[#ffd744]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.8">
+                    <circle cx="12" cy="12" r="9" stroke="currentColor" className="opacity-50" />
+                    <path d="M9 12l2 2 4-4" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </div>
+                <span className="text-sm font-bold tracking-wide text-white font-sans">On-Time Delivery</span>
+              </div>
+
+              {/* Point 2 */}
+              <div className="flex items-center space-x-3">
+                <div className="flex-shrink-0">
+                  <svg className="w-5 h-5 text-[#ffd744]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.8">
+                    <circle cx="12" cy="12" r="9" stroke="currentColor" className="opacity-50" />
+                    <path d="M9 12l2 2 4-4" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </div>
+                <span className="text-sm font-bold tracking-wide text-white font-sans">Pan India Shipping</span>
+              </div>
+
+              {/* Point 3 */}
+              <div className="flex items-center space-x-3">
+                <div className="flex-shrink-0">
+                  <svg className="w-5 h-5 text-[#ffd744]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.8">
+                    <circle cx="12" cy="12" r="9" stroke="currentColor" className="opacity-50" />
+                    <path d="M9 12l2 2 4-4" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </div>
+                <span className="text-sm font-bold tracking-wide text-white font-sans">Low MOQ (Min Order)</span>
+              </div>
+
+              {/* Point 4 */}
+              <div className="flex items-center space-x-3">
+                <div className="flex-shrink-0">
+                  <svg className="w-5 h-5 text-[#ffd744]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.8">
+                    <circle cx="12" cy="12" r="9" stroke="currentColor" className="opacity-50" />
+                    <path d="M9 12l2 2 4-4" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </div>
+                <span className="text-sm font-bold tracking-wide text-white font-sans">100% Quality Guarantee</span>
+              </div>
+
+            </div>
           </div>
 
         </div>
@@ -223,3 +120,4 @@ export default function About() {
     </section>
   );
 }
+

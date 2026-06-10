@@ -18,6 +18,7 @@ import AIVoiceSupport from './components/AIVoiceSupport';
 import ScrollProgress from './components/ScrollProgress';
 import Footer from './components/Footer';
 import EnquiriesList from './components/EnquiriesList';
+import BottomNavBar from './components/BottomNavBar';
 import { ServiceItem, Enquiry } from './types';
 
 export default function App() {
@@ -159,13 +160,18 @@ export default function App() {
       </main>
 
       {/* Footer block */}
-      <Footer />
+      <div className="pb-16 md:pb-0" id="main-footer-wrapper">
+        <Footer />
+      </div>
 
       {/* Persistent Floating WhatsApp quickconnect */}
       <FloatingWhatsApp />
 
       {/* Aura AI Design Consulting with Voice and Chat support features */}
       <AIVoiceSupport />
+
+      {/* Fixed Sticky Bottom Navigation Bar for Native PWA Mobile Experience */}
+      <BottomNavBar />
 
       {/* Circular Gold Gradient Scroll Progress Indicator */}
       <ScrollProgress />

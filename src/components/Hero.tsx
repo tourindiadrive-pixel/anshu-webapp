@@ -27,17 +27,17 @@ export default function Hero() {
       className="relative min-h-screen flex flex-col justify-center items-center overflow-hidden bg-[#000000] pt-24 pb-16 px-0"
     >
       {/* Subtle background ambient circles */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[30rem] h-[30rem] bg-[#d9869d]/5 rounded-full blur-[120px] pointer-events-none select-none" />
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[30rem] h-[30rem] bg-[#ff4773]/12 rounded-full blur-[120px] pointer-events-none select-none animate-pulse-slow" />
 
       {/* Symmetrical framing lines for extreme luxury visual structure */}
-      <div className="absolute left-14 top-0 bottom-0 w-[1px] bg-white/[0.02] hidden xl:block pointer-events-none z-10" />
-      <div className="absolute right-14 top-0 bottom-0 w-[1px] bg-white/[0.02] hidden xl:block pointer-events-none z-10" />
+      <div className="absolute left-14 top-0 bottom-0 w-[1px] bg-white/[0.04] hidden xl:block pointer-events-none z-10" />
+      <div className="absolute right-14 top-0 bottom-0 w-[1px] bg-white/[0.04] hidden xl:block pointer-events-none z-10" />
 
       {/* 
         Horizontal Widescreen Banner Band (Centered)
         Spans left edge to right edge of screen, fully aligned with the uploaded image layout!
       */}
-      <div className="w-full relative py-20 sm:py-24 md:py-28 border-y border-[#d9869d]/30 overflow-hidden flex items-center justify-center">
+      <div className="w-full relative py-20 sm:py-24 md:py-28 border-y border-[#ff4773]/45 overflow-hidden flex items-center justify-center shadow-[0_0_50px_rgba(255,71,115,0.15)]">
         {/* Background texture overlay */}
         <div 
           className="absolute inset-0 bg-cover bg-center transition-transform duration-[10s] scale-102 hover:scale-105"
@@ -45,7 +45,7 @@ export default function Hero() {
         />
         
         {/* Interactive LineWaves dynamic visual effect */}
-        <div className="absolute inset-0 z-[1] opacity-20 pointer-events-none mix-blend-color-dodge">
+        <div className="absolute inset-0 z-[1] opacity-35 pointer-events-none mix-blend-color-dodge">
           <LineWaves
             speed={0.25}
             innerLineCount={32}
@@ -54,9 +54,9 @@ export default function Hero() {
             rotation={-30}
             edgeFadeWidth={0.15}
             colorCycleSpeed={0.4}
-            brightness={0.35}
-            color1="#d9869d"
-            color2="#d4af37"
+            brightness={0.45}
+            color1="#ff4773"
+            color2="#ffd744"
             color3="#ffffff"
             enableMouseInteraction={true}
             mouseInfluence={2.5}
@@ -89,7 +89,7 @@ export default function Hero() {
               duration: 1, 
               ease: [0.16, 1, 0.3, 1] 
             }}
-            className="font-script text-4xl sm:text-6.5xl md:text-8xl lg:text-9xl text-[#d7849a] mt-5 md:mt-7 block tracking-normal normal-case leading-none italic text-glow drop-shadow-lg"
+            className="font-script text-4xl sm:text-6.5xl md:text-8xl lg:text-9xl text-[#ff4773] mt-5 md:mt-7 block tracking-normal normal-case leading-none italic text-glow drop-shadow-lg"
           >
             We Print Magic
           </motion.span>
@@ -104,7 +104,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="text-sm sm:text-base md:text-lg text-neutral-400 font-light tracking-wide leading-relaxed max-w-2xl mx-auto"
+          className="text-sm sm:text-base md:text-lg text-neutral-250 font-medium tracking-wide leading-relaxed max-w-2xl mx-auto"
         >
           From luxury neon signage to premium corporate gifting,<br />
           we turn your vision into tangible perfection.
@@ -124,12 +124,12 @@ export default function Hero() {
             onClick={() => handleActionClick('services')}
             whileHover={{ 
               y: -3,
-              backgroundColor: '#d7849a',
+              backgroundColor: '#ff4773',
               color: '#000000',
-              borderColor: '#d7849a'
+              borderColor: '#ff4773'
             }}
             transition={{ duration: 0.3, ease: 'easeOut' }}
-            className="w-full sm:w-auto px-10 py-4 rounded-full border border-neutral-800 text-white font-sans font-bold text-xs tracking-[0.2em] uppercase bg-transparent focus:outline-none cursor-pointer transition-colors"
+            className="w-full sm:w-auto px-10 py-4 rounded-full border border-neutral-750 text-white font-sans font-extrabold text-xs tracking-[0.2em] uppercase bg-transparent bg-white/[0.04] hover:shadow-[0_0_25px_rgba(255,71,115,0.4)] focus:outline-none cursor-pointer transition-colors"
             id="hero-view-portfolio-btn"
           >
             View Portfolio
@@ -140,10 +140,10 @@ export default function Hero() {
             onClick={() => handleActionClick('contact')}
             whileHover={{ 
               y: -3,
-              boxShadow: '0px 0px 25px rgba(215, 132, 154, 0.5)'
+              boxShadow: '0px 0px 30px rgba(255, 71, 115, 0.7)'
             }}
             transition={{ duration: 0.3, ease: 'easeOut' }}
-            className="w-full sm:w-auto px-10 py-4 rounded-full border border-[#d7849a] bg-[#d7849a] text-neutral-950 font-sans font-extrabold text-xs tracking-[0.2em] uppercase focus:outline-none cursor-pointer"
+            className="w-full sm:w-auto px-10 py-4 rounded-full border border-[#ff4773] bg-[#ff4773] text-neutral-950 font-sans font-black text-xs tracking-[0.2em] uppercase focus:outline-none cursor-pointer"
             id="hero-start-project-btn"
           >
             START YOUR PROJECT
@@ -155,7 +155,7 @@ export default function Hero() {
           onClick={() => handleActionClick('about')}
           animate={{ y: [0, 8, 0] }}
           transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-          className="inline-flex items-center justify-center mt-12 sm:mt-16 text-neutral-500 hover:text-[#d7849a] transition-colors cursor-pointer p-2 rounded-full"
+          className="inline-flex items-center justify-center mt-12 sm:mt-16 text-neutral-300 hover:text-[#ff4773] transition-colors cursor-pointer p-2 rounded-full"
           title="Explore Collections"
           id="hero-scroll-indicator"
         >

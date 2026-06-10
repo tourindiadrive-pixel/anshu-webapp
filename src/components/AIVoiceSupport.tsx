@@ -235,7 +235,45 @@ const UI_TRANSLATIONS = {
     activeMicCapture: "🎙️ Active microphone capture...",
     chatMinimized: "💬 Chat session is minimized",
     settingsBack: "Back to Chat",
-    descriptionText: "Customize your real-time chat & vocal interaction language preference. Aura adapts seamlessly to your natural language style."
+    descriptionText: "Customize your real-time chat & vocal interaction language preference. Aura adapts seamlessly to your natural language style.",
+    
+    // Localized quick action & badge labels
+    actionLocation: "📍 Location",
+    actionCall: "📞 Call Now",
+    actionWhatsapp: "💬 WhatsApp",
+    actionPrintWhatLabel: "🎨 What To Print?",
+    actionPrintWhat: "🎨 What Do You Want To Print?",
+    actionPriceEstimateLabel: "💰 Price Estimate",
+    actionPriceEstimate: "💰 Get Price Estimate",
+    actionBrandSigns: "🏢 Brand Signs",
+    actionBusinessBranding: "🏢 Business Branding",
+    actionCorporateGift: "🎁 Corporate Gift",
+    actionCorporateGifting: "🎁 Corporate Gifting",
+    actionWeddingCards: "💍 Wedding Cards",
+    actionWeddingPrinting: "💍 Wedding Printing",
+    actionCustomTshirt: "👕 Custom T-Shirt",
+    actionLedSignage: "✨ LED Signage",
+    
+    selectSubCategory: "Select Print Sub-Category:",
+    subcatVisitingCards: "Visiting Cards",
+    subcatLedSignBoard: "LED Sign Board",
+    subcatTshirtPrinting: "T-Shirt Printing",
+    subcatCorporateGifts: "Corporate Gifts",
+    subcatPackaging: "Packaging",
+    subcatWeddingCardsMap: "Wedding Cards",
+    subcatPhotoGifts: "Photo Gifts",
+    subcatUvPrinting: "UV Printing",
+    subcatAcrylicSignage: "Acrylic Signage",
+    subcatOther: "Other",
+
+    supportCustomLedSigns: "✨ Custom LED Signs",
+    supportGetQuotation: "📦 Get Quotation",
+
+    supportCustomLedSignsQuery: "Can you create custom LED signs?",
+    supportGetQuotationQuery: "How can I get a quotation?",
+    leadTimesBadgeQuery: "What is your custom box markup duration?",
+    directSalesBadgeQuery: "How do I contact premium sales partner?",
+    leatherDiariesBadgeQuery: "Can we customize corporate executive diaries?",
   },
   hi: {
     subtitle: "लक्जरी प्रिंट सलाहकार",
@@ -264,7 +302,45 @@ const UI_TRANSLATIONS = {
     activeMicCapture: "🎙️ सक्रिय माइक्रोफ़ोन कैप्चर...",
     chatMinimized: "💬 चैट सत्र छोटा किया गया है",
     settingsBack: "चैट पर वापस जाएं",
-    descriptionText: "अपनी रीयल-टाइम चैट और वॉयस इंटरैक्शन के लिए भाषा प्राथमिकता चुनें। ऑरा आपकी प्राकृतिक भाषा शैली के अनुसार ढल जाती है।"
+    descriptionText: "अपनी रीयल-टाइम चैट और वॉयस इंटरैक्शन के लिए भाषा प्राथमिकता चुनें। ऑरा आपकी प्राकृतिक भाषा शैली के अनुसार ढल जाती है।",
+    
+    // Localized quick action & badge labels
+    actionLocation: "📍 लोकेशन",
+    actionCall: "📞 अभी कॉल करें",
+    actionWhatsapp: "💬 व्हाट्सएप",
+    actionPrintWhatLabel: "🎨 क्या प्रिंट करें?",
+    actionPrintWhat: "🎨 आप क्या प्रिंट करवाना चाहते हैं?",
+    actionPriceEstimateLabel: "💰 मूल्य अनुमान",
+    actionPriceEstimate: "💰 मूल्य अनुमान प्राप्त करें",
+    actionBrandSigns: "🏢 ब्रांड बोर्ड",
+    actionBusinessBranding: "🏢 बिज़नेस ब्रांडिंग",
+    actionCorporateGift: "🎁 कॉर्पोरेट गिफ्ट",
+    actionCorporateGifting: "🎁 कॉर्पोरेट गिफ्टिंग",
+    actionWeddingCards: "💍 शादी के कार्ड",
+    actionWeddingPrinting: "💍 शादी की प्रिंटिंग",
+    actionCustomTshirt: "👕 कस्टमाइज़ टी-शर्ट",
+    actionLedSignage: "✨ एलईडी साइनेज",
+    
+    selectSubCategory: "प्रिंट उप-श्रेणी चुनें:",
+    subcatVisitingCards: "विजिटिंग कार्ड",
+    subcatLedSignBoard: "एलईडी साइन बोर्ड",
+    subcatTshirtPrinting: "टी-शर्ट प्रिंटिंग",
+    subcatCorporateGifts: "कॉर्पोरेट उपहार",
+    subcatPackaging: "पैवेजिंग",
+    subcatWeddingCardsMap: "शादी के कार्ड",
+    subcatPhotoGifts: "फोटो उपहार",
+    subcatUvPrinting: "यूवी प्रिंटिंग",
+    subcatAcrylicSignage: "एक्रेलिक साइनेज",
+    subcatOther: "अन्य",
+
+    supportCustomLedSigns: "✨ कस्टमाइज़ एलईडी साइन",
+    supportGetQuotation: "📦 कोटेशन प्राप्त करें",
+
+    supportCustomLedSignsQuery: "क्या आप कस्टमाइज़ एलईडी साइन बना सकते हैं?",
+    supportGetQuotationQuery: "कोटेशन कैसे प्राप्त करें?",
+    leadTimesBadgeQuery: "आपकी कस्टमाइज़ बॉक्स को तैयार करने की समय-सीमा क्या है?",
+    directSalesBadgeQuery: "मैं प्रीमियम सेल्स पार्टनर से कैसे संपर्क करूँ?",
+    leatherDiariesBadgeQuery: "क्या हम कॉर्पोरेट एक्जीक्यूटिव डायरी को कस्टमाइज़ कर सकते हैं?",
   },
   hinglish: {
     subtitle: "Premium Design Consultant",
@@ -293,7 +369,45 @@ const UI_TRANSLATIONS = {
     activeMicCapture: "🎙️ Microphone active hai...",
     chatMinimized: "💬 Chat session minimized hai",
     settingsBack: "Chat par wapas",
-    descriptionText: "Apni language setting customize karein. Aura aapki natural language style ke sath instantly adapt ho jayegi."
+    descriptionText: "Apni language setting customize karein. Aura aapki natural language style ke sath instantly adapt ho jayegi.",
+    
+    // Localized quick action & badge labels
+    actionLocation: "📍 Location",
+    actionCall: "📞 Call karein",
+    actionWhatsapp: "💬 WhatsApp",
+    actionPrintWhatLabel: "🎨 Kya print karein?",
+    actionPrintWhat: "🎨 Kya print karwana chahte hain?",
+    actionPriceEstimateLabel: "💰 Price Estimate",
+    actionPriceEstimate: "💰 Price estimate chahiye",
+    actionBrandSigns: "🏢 Brand Signs",
+    actionBusinessBranding: "🏢 Business Branding karni hai",
+    actionCorporateGift: "🎁 Corporate Gifting",
+    actionCorporateGifting: "🎁 Corporate Gifting karni hai",
+    actionWeddingCards: "💍 Wedding Cards",
+    actionWeddingPrinting: "💍 Wedding printing karni hai",
+    actionCustomTshirt: "👕 Custom T-Shirt",
+    actionLedSignage: "✨ LED Signage",
+    
+    selectSubCategory: "Print sub-category select karein:",
+    subcatVisitingCards: "Visiting Cards",
+    subcatLedSignBoard: "LED Sign Board",
+    subcatTshirtPrinting: "T-Shirt Printing",
+    subcatCorporateGifts: "Corporate Gifts",
+    subcatPackaging: "Packaging",
+    subcatWeddingCardsMap: "Wedding Cards",
+    subcatPhotoGifts: "Photo Gifts",
+    subcatUvPrinting: "UV Printing",
+    subcatAcrylicSignage: "Acrylic Signage",
+    subcatOther: "Other",
+
+    supportCustomLedSigns: "✨ Custom LED Signs",
+    supportGetQuotation: "📦 Quotation lein",
+
+    supportCustomLedSignsQuery: "Kya aap custom LED signs bana sakte hain?",
+    supportGetQuotationQuery: "Quotation kaise milegi?",
+    leadTimesBadgeQuery: "Aapka custom box print delivery duration kya hai?",
+    directSalesBadgeQuery: "Premium sales partner se kaise contact karein?",
+    leatherDiariesBadgeQuery: "Kya hum corporate executive diaries customize kar sakte hain?",
   }
 };
 
@@ -351,6 +465,29 @@ export default function AIVoiceSupport() {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
+  }, []);
+
+  // Listen for global toggle of AI Chat (decoupled design)
+  useEffect(() => {
+    function handleOpenAIChat() {
+      setIsOpen(true);
+      setIsMinimized(false);
+    }
+    window.addEventListener("open-ai-chat", handleOpenAIChat);
+    return () => {
+      window.removeEventListener("open-ai-chat", handleOpenAIChat);
+    };
+  }, []);
+
+  // Responsive device identification for mobile layout overrides
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   // Pre-chat quick actions and price estimate flows
@@ -1266,7 +1403,7 @@ export default function AIVoiceSupport() {
             exit={{ opacity: 0, scale: 0.8, y: 50 }}
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             onClick={handleOpenWidget}
-            className="fixed bottom-24 right-6 z-40 flex items-center justify-center p-4 rounded-full bg-gradient-to-tr from-[#d4af37] to-[#d7849a] text-black hover:scale-110 active:scale-95 transition-transform duration-300 shadow-[0_8px_30px_rgba(215,132,154,0.4)] border border-white/20 focus:outline-none"
+            className="fixed bottom-24 right-6 z-40 hidden sm:flex items-center justify-center p-4 rounded-full bg-gradient-to-tr from-[#d4af37] to-[#d7849a] text-black hover:scale-110 active:scale-95 transition-transform duration-300 shadow-[0_8px_30px_rgba(215,132,154,0.4)] border border-white/20 focus:outline-none"
             title="Aura Luxury AI Guide"
             id="ai-voice-support-trigger"
           >
@@ -1286,22 +1423,31 @@ export default function AIVoiceSupport() {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ 
-              opacity: 0, 
-              scale: 0.95, 
-              y: 60,
-              x: window.innerWidth < 640 ? 0 : 0
-            }}
-            animate={
-              isMinimized 
-                ? { height: '64px', width: '320px', y: 340, opacity: 1, scale: 1 } 
-                : { height: '540px', width: window.innerWidth < 480 ? '100%' : '380px', y: 0, opacity: 1, scale: 1 }
+            initial={
+              isMobile
+                ? { opacity: 0, y: '100%' }
+                : { opacity: 0, scale: 0.95, y: 60, x: 0 }
             }
-            exit={{ opacity: 0, scale: 0.95, y: 100 }}
-            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className={`fixed bottom-6 right-6 z-50 glass-card rounded-[28px] border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.85)] flex flex-col overflow-hidden max-w-[calc(100vw-32px)] backdrop-blur-2xl`}
+            animate={
+              isMinimized && !isMobile
+                ? { height: '64px', width: '320px', y: 340, opacity: 1, scale: 1 }
+                : { 
+                    height: isMobile ? '100dvh' : '540px', 
+                    width: isMobile ? '100vw' : '380px', 
+                    y: 0, 
+                    opacity: 1, 
+                    scale: 1 
+                  }
+            }
+            exit={
+              isMobile
+                ? { opacity: 0, y: '100%' }
+                : { opacity: 0, scale: 0.95, y: 100 }
+            }
+            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+            className={`fixed ${isMobile ? 'inset-0 pt-safe pb-safe rounded-none' : 'bottom-6 right-6 rounded-[28px] max-w-[calc(100vw-32px)]'} z-[100] glass-card border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.85)] flex flex-col overflow-hidden backdrop-blur-3xl`}
             style={{ 
-              backgroundColor: 'rgba(10, 10, 12, 0.95)',
+              backgroundColor: isMobile ? '#0D0D0F' : 'rgba(10, 10, 12, 0.95)',
             }}
             id="ai-voice-panel"
           >
@@ -1456,38 +1602,40 @@ export default function AIVoiceSupport() {
                     playTone('toggle');
                     setIsSettingsOpen(!isSettingsOpen);
                   }}
-                  className={`p-1.5 rounded-full hover:bg-white/5 text-neutral-400 hover:text-white transition-colors ${isSettingsOpen ? 'text-[#d4af37]' : ''}`}
+                  className={`p-3 sm:p-1.5 rounded-full hover:bg-white/5 text-neutral-400 hover:text-white transition-colors ${isSettingsOpen ? 'text-[#d4af37]' : ''}`}
                   title="Aura Settings / Language"
                   id="ai-settings-toggle-btn"
                 >
-                  <Settings className={`w-4 h-4 ${isSettingsOpen ? 'animate-spin' : ''}`} style={{ animationDuration: '3s' }} />
+                  <Settings className={`w-5 h-5 sm:w-4 sm:h-4 ${isSettingsOpen ? 'animate-spin' : ''}`} style={{ animationDuration: '3s' }} />
                 </button>
 
                 {/* Mute toggle button */}
                 <button
                   onClick={toggleSoundMute}
-                  className="p-1.5 rounded-full hover:bg-white/5 text-neutral-400 hover:text-white transition-colors"
+                  className="p-3 sm:p-1.5 rounded-full hover:bg-white/5 text-neutral-400 hover:text-white transition-colors"
                   title={isMuted ? "Unmute vocal responses" : "Mute vocal responses"}
                 >
-                  {isMuted ? <VolumeX className="w-4 h-4 text-[#d7849a]" /> : <Volume2 className="w-4 h-4" />}
+                  {isMuted ? <VolumeX className="w-5 h-5 sm:w-4 sm:h-4 text-[#d7849a]" /> : <Volume2 className="w-5 h-5 sm:w-4 sm:h-4" />}
                 </button>
 
                 {/* Minimize toggler */}
-                <button
-                  onClick={() => setIsMinimized(!isMinimized)}
-                  className="p-1.5 rounded-full hover:bg-white/5 text-neutral-400 hover:text-white transition-colors"
-                  title={isMinimized ? "Expand Consult Assistant" : "Minimize Assistant"}
-                >
-                  {isMinimized ? <Maximize2 className="w-4 h-4" /> : <Minimize2 className="w-4 h-4" />}
-                </button>
+                {!isMobile && (
+                  <button
+                    onClick={() => setIsMinimized(!isMinimized)}
+                    className="p-1.5 rounded-full hover:bg-white/5 text-neutral-400 hover:text-white transition-colors"
+                    title={isMinimized ? "Expand Consult Assistant" : "Minimize Assistant"}
+                  >
+                    {isMinimized ? <Maximize2 className="w-4 h-4" /> : <Minimize2 className="w-4 h-4" />}
+                  </button>
+                )}
 
                 {/* Close window */}
                 <button
                   onClick={handleCloseWidget}
-                  className="p-1.5 rounded-full hover:bg-red-500/10 text-neutral-400 hover:text-red-400 transition-colors"
+                  className="p-3 sm:p-1.5 rounded-full hover:bg-red-500/10 text-neutral-400 hover:text-red-400 transition-colors"
                   title="Close AI Assistant"
                 >
-                  <X className="w-4 h-4" />
+                  <X className="w-5 h-5 sm:w-4 sm:h-4" />
                 </button>
 
               </div>
@@ -1835,89 +1983,89 @@ export default function AIVoiceSupport() {
                               </p>
                               <div className="grid grid-cols-2 gap-1">
                                 <button
-                                  onClick={() => handleQuickAction('location', '📍 Location')}
+                                  onClick={() => handleQuickAction('location', t.actionLocation)}
                                   className="px-2 py-1.5 rounded-lg bg-white/[0.02] border border-white/[0.04] text-[10px] text-neutral-300 hover:text-white transition-all text-center"
                                 >
-                                  📍 Location
+                                  {t.actionLocation}
                                 </button>
                                 <button
-                                  onClick={() => handleQuickAction('call', '📞 Call Now')}
+                                  onClick={() => handleQuickAction('call', t.actionCall)}
                                   className="px-2 py-1.5 rounded-lg bg-white/[0.02] border border-white/[0.04] text-[10px] text-neutral-300 hover:text-white transition-all text-center"
                                 >
-                                  📞 Call Now
+                                  {t.actionCall}
                                 </button>
                                 <button
-                                  onClick={() => handleQuickAction('whatsapp', '💬 WhatsApp')}
+                                  onClick={() => handleQuickAction('whatsapp', t.actionWhatsapp)}
                                   className="px-2 py-1.5 rounded-lg bg-white/[0.02] border border-white/[0.04] text-[10px] text-neutral-300 hover:text-white transition-all text-center animate-pulse"
                                 >
-                                  💬 WhatsApp
+                                  {t.actionWhatsapp}
                                 </button>
                                 <button
-                                  onClick={() => handleQuickAction('print_what', '🎨 What Do You Want To Print?')}
+                                  onClick={() => handleQuickAction('print_what', t.actionPrintWhat)}
                                   className="px-2 py-1.5 rounded-lg bg-white/[0.02] border border-white/[0.04] text-[10px] text-neutral-300 hover:text-white transition-all text-center"
                                 >
-                                  🎨 What To Print?
+                                  {t.actionPrintWhatLabel}
                                 </button>
                                 <button
-                                  onClick={() => handleQuickAction('price_estimate', '💰 Get Price Estimate')}
+                                  onClick={() => handleQuickAction('price_estimate', t.actionPriceEstimate)}
                                   className="px-2 py-1.5 rounded-lg bg-[#d4af37]/10 border border-[#d4af37]/20 text-[10px] text-[#d4af37] hover:text-white transition-all text-center"
                                 >
-                                  💰 Price Estimate
+                                  {t.actionPriceEstimateLabel}
                                 </button>
                                 <button
-                                  onClick={() => handleQuickAction('business_branding', '🏢 Business Branding')}
+                                  onClick={() => handleQuickAction('business_branding', t.actionBusinessBranding)}
                                   className="px-2 py-1.5 rounded-lg bg-white/[0.02] border border-white/[0.04] text-[10px] text-neutral-300 hover:text-white transition-all text-center"
                                 >
-                                  🏢 Brand Signs
+                                  {t.actionBrandSigns}
                                 </button>
                                 <button
-                                  onClick={() => handleQuickAction('corporate_gifting', '🎁 Corporate Gifting')}
+                                  onClick={() => handleQuickAction('corporate_gifting', t.actionCorporateGifting)}
                                   className="px-2 py-1.5 rounded-lg bg-white/[0.02] border border-white/[0.04] text-[10px] text-neutral-300 hover:text-white transition-all text-center"
                                 >
-                                  🎁 Corporate Gift
+                                  {t.actionCorporateGift}
                                 </button>
                                 <button
-                                  onClick={() => handleQuickAction('wedding_printing', '💍 Wedding Printing')}
+                                  onClick={() => handleQuickAction('wedding_printing', t.actionWeddingPrinting)}
                                   className="px-2 py-1.5 rounded-lg bg-white/[0.02] border border-white/[0.04] text-[10px] text-neutral-300 hover:text-white transition-all text-center"
                                 >
-                                  💍 Wedding Cards
+                                  {t.actionWeddingCards}
                                 </button>
                                 <button
-                                  onClick={() => handleQuickAction('tshirt_printing', '👕 Custom T-Shirt')}
+                                  onClick={() => handleQuickAction('tshirt_printing', t.actionCustomTshirt)}
                                   className="px-2 py-1.5 rounded-lg bg-white/[0.02] border border-white/[0.04] text-[10px] text-neutral-300 hover:text-white transition-all text-center"
                                 >
-                                  👕 Custom T-Shirt
+                                  {t.actionCustomTshirt}
                                 </button>
                                 <button
-                                  onClick={() => handleQuickAction('led_signage', '✨ LED Signage')}
+                                  onClick={() => handleQuickAction('led_signage', t.actionLedSignage)}
                                   className="px-2 py-1.5 rounded-lg bg-white/[0.02] border border-white/[0.04] text-[10px] text-neutral-300 hover:text-white transition-all text-center"
                                 >
-                                  ✨ LED Signage
+                                  {t.actionLedSignage}
                                 </button>
                               </div>
                             </div>
                           ) : printingOptionsActive ? (
                             <div className="w-full text-center">
-                              <p className="text-[9px] tracking-widest text-[#d4af37] font-mono uppercase mb-2">Select Print Sub-Category:</p>
+                              <p className="text-[9px] tracking-widest text-[#d4af37] font-mono uppercase mb-2">{t.selectSubCategory}</p>
                               <div className="flex flex-wrap gap-1 justify-center max-h-[84px] overflow-y-auto custom-scrollbar">
                                 {[
-                                  "Visiting Cards",
-                                  "LED Sign Board",
-                                  "T-Shirt Printing",
-                                  "Corporate Gifts",
-                                  "Packaging",
-                                  "Wedding Cards",
-                                  "Photo Gifts",
-                                  "UV Printing",
-                                  "Acrylic Signage",
-                                  "Other"
-                                ].map((option) => (
+                                  { key: "Visiting Cards", label: t.subcatVisitingCards },
+                                  { key: "LED Sign Board", label: t.subcatLedSignBoard },
+                                  { key: "T-Shirt Printing", label: t.subcatTshirtPrinting },
+                                  { key: "Corporate Gifts", label: t.subcatCorporateGifts },
+                                  { key: "Packaging", label: t.subcatPackaging },
+                                  { key: "Wedding Cards", label: t.subcatWeddingCardsMap },
+                                  { key: "Photo Gifts", label: t.subcatPhotoGifts },
+                                  { key: "UV Printing", label: t.subcatUvPrinting },
+                                  { key: "Acrylic Signage", label: t.subcatAcrylicSignage },
+                                  { key: "Other", label: t.subcatOther }
+                                ].map((item) => (
                                   <button 
-                                    key={option}
-                                    onClick={() => handlePrintOptionClick(option)}
+                                    key={item.key}
+                                    onClick={() => handlePrintOptionClick(item.label)}
                                     className="px-2 py-0.5 rounded-full bg-white/[0.03] border border-white/[0.06] hover:border-[#d7849a]/40 text-[9px] text-neutral-300 hover:text-white transition-all cursor-pointer"
                                   >
-                                    {option}
+                                    {item.label}
                                   </button>
                                 ))}
                               </div>
@@ -1927,16 +2075,16 @@ export default function AIVoiceSupport() {
                               <p className="text-[9px] tracking-widest text-[#d4af37] font-mono uppercase mb-1">{t.directSupportTitle}</p>
                               <div className="flex justify-center gap-2">
                                 <button 
-                                  onClick={() => handleBadgeClick("Can you create custom LED signs?")}
+                                  onClick={() => handleBadgeClick(t.supportCustomLedSignsQuery)}
                                   className="px-2.5 py-1 rounded-full bg-white/[0.03] border border-white/[0.06] hover:border-[#d7849a]/40 hover:bg-white/[0.06] text-[10px] text-neutral-300 hover:text-white transition-all cursor-pointer"
                                 >
-                                  ✨ Custom LED Signs
+                                  {t.supportCustomLedSigns}
                                 </button>
                                 <button 
-                                  onClick={() => handleBadgeClick("How can I get a quotation?")}
+                                  onClick={() => handleBadgeClick(t.supportGetQuotationQuery)}
                                   className="px-2.5 py-1 rounded-full bg-white/[0.03] border border-white/[0.06] hover:border-[#d4af37]/40 hover:bg-white/[0.06] text-[10px] text-neutral-300 hover:text-white transition-all cursor-pointer"
                                 >
-                                  📦 Get Quotation
+                                  {t.supportGetQuotation}
                                 </button>
                               </div>
                             </div>
@@ -1987,73 +2135,73 @@ export default function AIVoiceSupport() {
                               <div className="grid grid-cols-2 gap-1.5">
                                 <button
                                   type="button"
-                                  onClick={() => handleQuickAction('location', '📍 Location')}
+                                  onClick={() => handleQuickAction('location', t.actionLocation)}
                                   className="px-2 py-2 rounded-xl bg-white/[0.02] border border-white/[0.05] hover:border-[#d7849a]/40 hover:bg-white/[0.04] text-left text-[11px] text-neutral-300 hover:text-white transition-all cursor-pointer flex items-center gap-1.5"
                                 >
-                                  📍 Location
+                                  {t.actionLocation}
                                 </button>
                                 <button
                                   type="button"
-                                  onClick={() => handleQuickAction('call', '📞 Call Now')}
+                                  onClick={() => handleQuickAction('call', t.actionCall)}
                                   className="px-2 py-2 rounded-xl bg-white/[0.02] border border-white/[0.05] hover:border-[#d7849a]/40 hover:bg-white/[0.04] text-left text-[11px] text-neutral-300 hover:text-white transition-all cursor-pointer flex items-center gap-1.5"
                                 >
-                                  📞 Call Now
+                                  {t.actionCall}
                                 </button>
                                 <button
                                   type="button"
-                                  onClick={() => handleQuickAction('whatsapp', '💬 WhatsApp')}
+                                  onClick={() => handleQuickAction('whatsapp', t.actionWhatsapp)}
                                   className="px-2 py-2 rounded-xl bg-white/[0.02] border border-white/[0.05] hover:border-emerald-500/40 hover:bg-white/[0.04] text-left text-[11px] text-neutral-300 hover:text-white transition-all cursor-pointer flex items-center gap-1.5 animate-pulse"
                                 >
-                                  💬 WhatsApp
+                                  {t.actionWhatsapp}
                                 </button>
                                 <button
                                   type="button"
-                                  onClick={() => handleQuickAction('print_what', '🎨 What Do You Want To Print?')}
+                                  onClick={() => handleQuickAction('print_what', t.actionPrintWhat)}
                                   className="px-2 py-2 rounded-xl bg-white/[0.02] border border-white/[0.05] hover:border-[#d4af37]/40 hover:bg-white/[0.04] text-left text-[11px] text-neutral-300 hover:text-white transition-all cursor-pointer flex items-center gap-1.5"
                                 >
-                                  🎨 What To Print?
+                                  {t.actionPrintWhatLabel}
                                 </button>
                                 <button
                                   type="button"
-                                  onClick={() => handleQuickAction('price_estimate', '💰 Get Price Estimate')}
+                                  onClick={() => handleQuickAction('price_estimate', t.actionPriceEstimate)}
                                   className="px-2 py-2 rounded-xl bg-white/[0.02] border border-[#d4af37]/20 hover:border-[#d4af37] text-left text-[11px] text-[#d4af37] hover:text-white transition-all cursor-pointer flex items-center gap-1.5"
                                 >
-                                  💰 Price Estimate
+                                  {t.actionPriceEstimateLabel}
                                 </button>
                                 <button
                                   type="button"
-                                  onClick={() => handleQuickAction('business_branding', '🏢 Business Branding')}
+                                  onClick={() => handleQuickAction('business_branding', t.actionBusinessBranding)}
                                   className="px-2 py-2 rounded-xl bg-white/[0.02] border border-white/[0.05] hover:border-[#d7849a]/40 hover:bg-white/[0.04] text-left text-[11px] text-neutral-300 hover:text-white transition-all cursor-pointer flex items-center gap-1.5"
                                 >
-                                  🏢 Business Branding
+                                  {t.actionBrandSigns}
                                 </button>
                                 <button
                                   type="button"
-                                  onClick={() => handleQuickAction('corporate_gifting', '🎁 Corporate Gifting')}
+                                  onClick={() => handleQuickAction('corporate_gifting', t.actionCorporateGifting)}
                                   className="px-2 py-2 rounded-xl bg-white/[0.02] border border-white/[0.05] hover:border-[#d4af37]/40 hover:bg-white/[0.04] text-left text-[11px] text-neutral-300 hover:text-white transition-all cursor-pointer flex items-center gap-1.5"
                                 >
-                                  🎁 Corporate Gifting
+                                  {t.actionCorporateGift}
                                 </button>
                                 <button
                                   type="button"
-                                  onClick={() => handleQuickAction('wedding_printing', '💍 Wedding Printing')}
+                                  onClick={() => handleQuickAction('wedding_printing', t.actionWeddingPrinting)}
                                   className="px-2 py-2 rounded-xl bg-white/[0.02] border border-white/[0.05] hover:border-[#d7849a]/40 hover:bg-white/[0.04] text-left text-[11px] text-neutral-300 hover:text-white transition-all cursor-pointer flex items-center gap-1.5"
                                 >
-                                  💍 Wedding Printing
+                                  {t.actionWeddingCards}
                                 </button>
                                 <button
                                   type="button"
-                                  onClick={() => handleQuickAction('tshirt_printing', '👕 Custom T-Shirt')}
+                                  onClick={() => handleQuickAction('tshirt_printing', t.actionCustomTshirt)}
                                   className="px-2 py-2 rounded-xl bg-white/[0.02] border border-white/[0.05] hover:border-[#d4af37]/40 hover:bg-white/[0.04] text-left text-[11px] text-neutral-300 hover:text-white transition-all cursor-pointer flex items-center gap-1.5"
                                 >
-                                  👕 Custom T-Shirt
+                                  {t.actionCustomTshirt}
                                 </button>
                                 <button
                                   type="button"
-                                  onClick={() => handleQuickAction('led_signage', '✨ LED Signage')}
+                                  onClick={() => handleQuickAction('led_signage', t.actionLedSignage)}
                                   className="px-2 py-2 rounded-xl bg-white/[0.02] border border-white/[0.05] hover:border-violet-500/40 hover:bg-white/[0.04] text-left text-[11px] text-neutral-300 hover:text-white transition-all cursor-pointer flex items-center gap-1.5"
                                 >
-                                  ✨ LED Signage
+                                  {t.actionLedSignage}
                                 </button>
                               </div>
                             </div>
@@ -2062,28 +2210,28 @@ export default function AIVoiceSupport() {
                           {printingOptionsActive && (
                             <div className="p-3 bg-neutral-900/40 border border-[#d4af37]/20 rounded-2xl my-2">
                               <p className="text-[9px] font-mono uppercase tracking-wider text-[#d4af37] mb-2 text-center">
-                                Select Print Sub-Category:
+                                {t.selectSubCategory}
                               </p>
                               <div className="flex flex-wrap gap-1.5 justify-center">
                                 {[
-                                  "Visiting Cards",
-                                  "LED Sign Board",
-                                  "T-Shirt Printing",
-                                  "Corporate Gifts",
-                                  "Packaging",
-                                  "Wedding Cards",
-                                  "Photo Gifts",
-                                  "UV Printing",
-                                  "Acrylic Signage",
-                                  "Other"
-                                ].map((option) => (
+                                  { key: "Visiting Cards", label: t.subcatVisitingCards },
+                                  { key: "LED Sign Board", label: t.subcatLedSignBoard },
+                                  { key: "T-Shirt Printing", label: t.subcatTshirtPrinting },
+                                  { key: "Corporate Gifts", label: t.subcatCorporateGifts },
+                                  { key: "Packaging", label: t.subcatPackaging },
+                                  { key: "Wedding Cards", label: t.subcatWeddingCardsMap },
+                                  { key: "Photo Gifts", label: t.subcatPhotoGifts },
+                                  { key: "UV Printing", label: t.subcatUvPrinting },
+                                  { key: "Acrylic Signage", label: t.subcatAcrylicSignage },
+                                  { key: "Other", label: t.subcatOther }
+                                ].map((item) => (
                                   <button
-                                    key={option}
+                                    key={item.key}
                                     type="button"
-                                    onClick={() => handlePrintOptionClick(option)}
+                                    onClick={() => handlePrintOptionClick(item.label)}
                                     className="px-2.5 py-1.5 rounded-full bg-white/[0.03] border border-white/[0.06] hover:border-[#d7849a] text-[10px] text-neutral-200 hover:text-white transition-all cursor-pointer whitespace-nowrap animate-fade-in"
                                   >
-                                    {option}
+                                    {item.label}
                                   </button>
                                 ))}
                               </div>
@@ -2096,19 +2244,19 @@ export default function AIVoiceSupport() {
                         {/* Fast spec badges */}
                         <div className="border-t border-white/[0.05] pt-3 pb-2 flex flex-wrap gap-1.5 overflow-hidden">
                           <button 
-                            onClick={() => handleBadgeClick("What is your custom box markup duration?")}
+                            onClick={() => handleBadgeClick(t.leadTimesBadgeQuery)}
                             className="px-2.5 py-1 rounded-full bg-white/[0.02] border border-white/[0.05] hover:border-[#d7849a]/30 text-[9px] text-neutral-400 hover:text-white transition-all cursor-pointer whitespace-nowrap"
                           >
                             {t.leadTimesBadge}
                           </button>
                           <button 
-                            onClick={() => handleBadgeClick("How do I contact premium sales partner?")}
+                            onClick={() => handleBadgeClick(t.directSalesBadgeQuery)}
                             className="px-2.5 py-1 rounded-full bg-white/[0.02] border border-white/[0.05] hover:border-[#d4af37]/30 text-[9px] text-neutral-400 hover:text-white transition-all cursor-pointer whitespace-nowrap"
                           >
                             {t.directSalesBadge}
                           </button>
                           <button 
-                            onClick={() => handleBadgeClick("Can we customize corporate executive diaries?")}
+                            onClick={() => handleBadgeClick(t.leatherDiariesBadgeQuery)}
                             className="px-2.5 py-1 rounded-full bg-white/[0.02] border border-white/[0.05] hover:border-white/20 text-[9px] text-neutral-400 hover:text-white transition-all cursor-pointer whitespace-nowrap"
                           >
                             {t.leatherDiariesBadge}

@@ -89,26 +89,26 @@ export default function Navbar({ onOpenEnquiries, enquiriesCount }: NavbarProps)
         }`}
         id="navbar"
       >
-        <div className="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
-          {/* Custom Styled Luxury Monogram Badge Logo */}
+        <div className="max-w-7xl mx-auto px-4 md:px-6 h-16 md:h-24 flex items-center justify-between">
+          {/* Custom Styled Luxury Monogram Badge Logo (Compact Row on mobile, standard on desktop) */}
           <button 
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className="flex flex-col items-center justify-center bg-black border border-white/5 px-4 py-2 hover:border-[#d9869d]/40 transition-all duration-300 rounded-lg group focus:outline-none"
+            className="flex flex-row items-center gap-2.5 bg-black border border-white/5 px-2.5 py-1.5 hover:border-[#d9869d]/40 transition-all duration-300 rounded-lg group focus:outline-none cursor-pointer"
             id="nav-logo-btn"
           >
             {/* Monogram Box and graphic */}
-            <div className="relative w-12 h-12 flex items-center justify-center rounded-md bg-neutral-950 border border-[#d9869d]/30 group-hover:border-[#d9869d]/70 transition-colors shadow-inner overflow-hidden">
-              <span className="font-sans font-black text-lg tracking-wider bg-gradient-to-br from-[#d9869d] via-[#e98fa7] to-white bg-clip-text text-transparent transform group-hover:scale-110 transition-transform duration-300 text-glow">
+            <div className="relative w-8 h-8 md:w-11 md:h-11 flex items-center justify-center rounded-md bg-neutral-950 border border-[#d9869d]/30 group-hover:border-[#d9869d]/70 transition-colors shadow-inner overflow-hidden shrink-0">
+              <span className="font-sans font-black text-sm md:text-md tracking-wider bg-gradient-to-br from-[#d9869d] via-[#e98fa7] to-white bg-clip-text text-transparent transform group-hover:scale-110 transition-transform duration-300 text-glow">
                 AP
               </span>
             </div>
             
             {/* Branding names block */}
-            <div className="text-center mt-1">
-              <span className="font-sans text-[10px] font-extrabold tracking-[0.25em] text-white block uppercase leading-none">
+            <div className="text-left">
+              <span className="font-sans text-[8px] md:text-[9px] font-extrabold tracking-[0.2em] text-white block uppercase leading-none">
                 ANSHU
               </span>
-              <span className="font-script text-xs text-[#d9869d] block mt-0.5 tracking-normal normal-case leading-none">
+              <span className="font-script text-[11px] md:text-sm text-[#d9869d] block mt-0.5 tracking-normal normal-case leading-none">
                 Prints
               </span>
             </div>
