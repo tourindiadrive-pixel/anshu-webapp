@@ -121,10 +121,10 @@ export default function Services({ onSelectService }: ServicesProps) {
               transition={{ duration: 0.7, delay: (index % 3) * 0.1 }}
               whileHover={{ 
                 y: -10,
-                transition: { duration: 0.3, ease: 'easeOut' }
+                transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] }
               }}
               onClick={() => onSelectService(service)}
-              className="group relative rounded-[28px] bg-[#0f0f12] border border-[#d9869d]/20 hover:border-[#d9869d]/60 hover:shadow-[0_0_30px_rgba(217,134,157,0.15)] transition-all duration-300 cursor-pointer flex flex-col justify-center h-[360px] shadow-[0_15px_35px_rgba(0,0,0,0.8)]"
+              className="group relative rounded-[28px] glass-card hover:glass-card-gold hover:border-[#d9869d]/60 hover:shadow-[0_0_30px_rgba(217,134,157,0.3)] transition-all duration-500 ease-out cursor-pointer flex flex-col justify-center h-[360px] shadow-[0_15px_35px_rgba(0,0,0,0.9)]"
               id={`service-card-${service.id}`}
             >
               <div className="flex flex-col items-center justify-center text-center p-8 space-y-6 h-full">

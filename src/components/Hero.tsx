@@ -70,11 +70,10 @@ export default function Hero() {
         {/* Banner content centered vertically and horizontally */}
         <div className="relative z-10 max-w-7xl mx-auto px-6 text-center select-none">
           <motion.h1
-            initial={{ opacity: 0, y: 40, filter: 'blur(10px)' }}
-            animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+            initial={{ opacity: 0, y: 60 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ 
-              delay: 0.2, 
-              duration: 1.4, 
+              duration: 0.8, 
               ease: [0.16, 1, 0.3, 1] 
             }}
             className="font-sans font-extrabold text-white text-4.5xl sm:text-6xl md:text-7.5xl lg:text-8xl tracking-[0.25em] md:tracking-[0.3em] uppercase leading-none drop-shadow-2xl"
@@ -83,14 +82,14 @@ export default function Hero() {
           </motion.h1>
           
           <motion.span
-            initial={{ opacity: 0, y: 30, scale: 0.96, filter: 'blur(5px)' }}
-            animate={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
             transition={{ 
-              delay: 0.55, 
-              duration: 1.6, 
+              delay: 0.3, 
+              duration: 1, 
               ease: [0.16, 1, 0.3, 1] 
             }}
-            className="font-script text-4xl sm:text-6.5xl md:text-8xl lg:text-9xl text-[#d9869d] mt-5 md:mt-7 block tracking-normal normal-case leading-none italic text-glow drop-shadow-lg"
+            className="font-script text-4xl sm:text-6.5xl md:text-8xl lg:text-9xl text-[#d7849a] mt-5 md:mt-7 block tracking-normal normal-case leading-none italic text-glow drop-shadow-lg"
           >
             We Print Magic
           </motion.span>
@@ -100,52 +99,69 @@ export default function Hero() {
       {/* 
         Description area on black background below the banner band 
       */}
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.85, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-        className="relative z-10 max-w-4xl mx-auto text-center px-6 mt-12 sm:mt-16"
-      >
-        <p className="text-sm sm:text-base md:text-lg text-neutral-400 font-light tracking-wide leading-relaxed max-w-2xl mx-auto">
+      <div className="relative z-10 max-w-4xl mx-auto text-center px-6 mt-12 sm:mt-16">
+        <motion.p
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="text-sm sm:text-base md:text-lg text-neutral-400 font-light tracking-wide leading-relaxed max-w-2xl mx-auto"
+        >
           From luxury neon signage to premium corporate gifting,<br />
           we turn your vision into tangible perfection.
-        </p>
+        </motion.p>
 
         {/* 
           Double Custom Pill Buttons with Luxury Highlight Hover 
         */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mt-10 md:mt-12">
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.7, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="flex flex-col sm:flex-row items-center justify-center gap-6 mt-10 md:mt-12"
+        >
           {/* View portfolio button */}
-          <button
+          <motion.button
             onClick={() => handleActionClick('services')}
-            className="w-full sm:w-auto px-10 py-4 rounded-full border border-neutral-800 text-white font-sans font-bold text-xs tracking-[0.2em] uppercase bg-transparent transition-all duration-300 hover:border-[#d9869d] hover:text-[#d9869d] hover:scale-105 hover:shadow-[0_0_20px_rgba(217,134,157,0.2)] focus:outline-none cursor-pointer"
+            whileHover={{ 
+              y: -3,
+              backgroundColor: '#d7849a',
+              color: '#000000',
+              borderColor: '#d7849a'
+            }}
+            transition={{ duration: 0.3, ease: 'easeOut' }}
+            className="w-full sm:w-auto px-10 py-4 rounded-full border border-neutral-800 text-white font-sans font-bold text-xs tracking-[0.2em] uppercase bg-transparent focus:outline-none cursor-pointer transition-colors"
             id="hero-view-portfolio-btn"
           >
             View Portfolio
-          </button>
+          </motion.button>
 
           {/* Start Project filled button */}
-          <button
+          <motion.button
             onClick={() => handleActionClick('contact')}
-            className="w-full sm:w-auto px-10 py-4 rounded-full border border-[#d9869d] bg-[#d9869d] text-neutral-950 font-sans font-extrabold text-xs tracking-[0.2em] uppercase transition-all duration-300 hover:bg-[#ca5e7e] hover:border-[#ca5e7e] hover:scale-105 hover:shadow-[0_0_25px_rgba(217,134,157,0.5)] focus:outline-none cursor-pointer"
+            whileHover={{ 
+              y: -3,
+              boxShadow: '0px 0px 25px rgba(215, 132, 154, 0.5)'
+            }}
+            transition={{ duration: 0.3, ease: 'easeOut' }}
+            className="w-full sm:w-auto px-10 py-4 rounded-full border border-[#d7849a] bg-[#d7849a] text-neutral-950 font-sans font-extrabold text-xs tracking-[0.2em] uppercase focus:outline-none cursor-pointer"
             id="hero-start-project-btn"
           >
             START YOUR PROJECT
-          </button>
-        </div>
+          </motion.button>
+        </motion.div>
 
         {/* Animated bounce downdrive arrow */}
         <motion.div 
           onClick={() => handleActionClick('about')}
           animate={{ y: [0, 8, 0] }}
           transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-          className="inline-flex items-center justify-center mt-12 sm:mt-16 text-neutral-500 hover:text-[#d9869d] transition-colors cursor-pointer p-2 rounded-full"
+          className="inline-flex items-center justify-center mt-12 sm:mt-16 text-neutral-500 hover:text-[#d7849a] transition-colors cursor-pointer p-2 rounded-full"
           title="Explore Collections"
           id="hero-scroll-indicator"
         >
           <ChevronDown className="w-8 h-8 md:w-10 md:h-10" strokeWidth={1.5} />
         </motion.div>
-      </motion.div>
+      </div>
     </section>
   );
 }
