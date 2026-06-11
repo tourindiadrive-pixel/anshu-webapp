@@ -29,8 +29,8 @@ export default function App() {
   
   const [isEnquiriesOpen, setIsEnquiriesOpen] = useState(false);
   const [enquiries, setEnquiries] = useState<Enquiry[]>(() => {
-    // Attempt to load from localStorage, otherwise pre-seed high quality luxury leads
-    const saved = localStorage.getItem('anshu_enquiries_v1');
+    // Load from anshu_prints_leads, fallback to older anshu_enquiries_v1 if present
+    const saved = localStorage.getItem('anshu_prints_leads') || localStorage.getItem('anshu_enquiries_v1');
     if (saved) {
       try {
         return JSON.parse(saved);
@@ -39,7 +39,7 @@ export default function App() {
       }
     }
     
-    // Default luxury seed records
+    // Default luxury seed records - 3 highly realistic detailed leads
     const initialSeed: Enquiry[] = [
       {
         id: 'seed-1',
@@ -60,18 +60,29 @@ export default function App() {
         serviceType: 'Custom Packaging',
         budgetRange: '₹15,000 - ₹50,000 (Premium)',
         message: 'Looking to construct 2,500 matte velvet textured perfume cartons carrying embossed hot-stamped gold foil monograms.',
-        timestamp: '09 Jun 2026, 11:24 AM',
+        timestamp: '10 Jun 2026, 11:24 AM',
         status: 'Contacted'
+      },
+      {
+        id: 'seed-3',
+        name: 'Ananya Singhania (Aura Designs)',
+        phone: '98765 43210',
+        city: 'Bangalore',
+        serviceType: 'UV Printing',
+        budgetRange: '₹5,000 - ₹15,000 (Standard)',
+        message: 'Need UV printed acrylic signage blocks for our new high-end designer boutique. Must have pristine matte frost finish and subtle back-lighting capability.',
+        timestamp: '11 Jun 2026, 02:45 AM',
+        status: 'New'
       }
     ];
     
-    localStorage.setItem('anshu_enquiries_v1', JSON.stringify(initialSeed));
+    localStorage.setItem('anshu_prints_leads', JSON.stringify(initialSeed));
     return initialSeed;
   });
 
   // Keep localStorage perfectly in sync
   useEffect(() => {
-    localStorage.setItem('anshu_enquiries_v1', JSON.stringify(enquiries));
+    localStorage.setItem('anshu_prints_leads', JSON.stringify(enquiries));
   }, [enquiries]);
 
   // Handle incoming new custom enquiries
@@ -105,11 +116,38 @@ export default function App() {
     });
   };
 
+  useEffect(() => {
+    const handleAutoToggle = () => {
+      setIsAdmin(true);
+      localStorage.setItem('anshu_is_admin', 'true');
+    };
+    window.addEventListener('trigger-admin-auto-toggle', handleAutoToggle);
+    return () => {
+      window.removeEventListener('trigger-admin-auto-toggle', handleAutoToggle);
+    };
+  }, []);
+
   // Open the gallery modal for a specific chosen service card
   const handleSelectService = (service: ServiceItem) => {
     setActiveGalleryService(service);
     setIsGalleryOpen(true);
   };
+
+  if (isAdmin) {
+    return (
+      <div className="min-h-screen bg-[#070708] text-white flex flex-col justify-between selection:bg-gold-500 selection:text-[#070708] font-sans" id="approot-admin">
+        {/* Full-screen Autonomous Premium Administrative CRM Workspace */}
+        <main className="flex-grow">
+          <AdminDashboardSection 
+            enquiries={enquiries}
+            onDeleteEnquiry={handleDeleteEnquiry}
+            onUpdateStatus={handleUpdateStatus}
+            onToggleAdmin={handleToggleAdmin}
+          />
+        </main>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[#000000] text-white flex flex-col justify-between selection:bg-gold-500 selection:text-neutral-950 font-sans" id="approot">
@@ -180,8 +218,10 @@ export default function App() {
           <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-[#d4af37]/25 via-[#d9869d]/35 via-[#d4af37]/25 to-transparent" />
         </div>
 
-        {/* Luxury contact enquiry panel */}
-        <Contact onEnquirySubmitted={handleEnquirySubmitted} />
+        {/* Luxury contact enquiry panel — Only visible to customers/users, hidden for Admin mode */}
+        {!isAdmin && (
+          <Contact onEnquirySubmitted={handleEnquirySubmitted} isAdmin={isAdmin} />
+        )}
 
         {/* Dedicated Admin Dashboard CRM Panel — Protected to be visible ONLY to administrators */}
         {isAdmin && (

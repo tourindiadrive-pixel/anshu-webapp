@@ -26,6 +26,13 @@ export interface TestimonialItem {
   image: string;
 }
 
+export interface UploadedFileInfo {
+  name: string;
+  size: string;
+  type: string;
+  previewUrl?: string; // Base64 data URL to persist across page reloads or local URLs
+}
+
 export interface Enquiry {
   id: string;
   name: string;
@@ -36,10 +43,11 @@ export interface Enquiry {
   message: string;
   timestamp: string;
   status: 'New' | 'Contacted' | 'In Progress';
-  uploadedFile?: {
-    name: string;
-    size: string;
-    type: string;
-    previewUrl?: string;
-  };
+  email?: string;
+  uploadedFile?: UploadedFileInfo; // keep compatibility
+  uploadedFiles?: UploadedFileInfo[]; // support up to 5 uploaded files (max 5MB each)
+  imageUrl?: string;
+  facebookLink?: string;
+  instagramLink?: string;
+  otherLink?: string;
 }

@@ -16,7 +16,13 @@ import {
   CheckCircle,
   FileCheck,
   Activity,
-  AlertCircle
+  AlertCircle,
+  Link2,
+  Globe,
+  Instagram,
+  Facebook,
+  FileText,
+  Mail
 } from 'lucide-react';
 import { Enquiry } from '../types';
 
@@ -36,6 +42,47 @@ export default function AdminDashboardSection({
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<'All' | Enquiry['status']>('All');
   const [serviceFilter, setServiceFilter] = useState('All');
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
+
+  // Safely filter selected ids down to existing enquiries
+  const validSelectedIds = useMemo(() => {
+    const existingIds = new Set(enquiries.map(e => e.id));
+    return selectedIds.filter(id => existingIds.has(id));
+  }, [selectedIds, enquiries]);
+
+  const handleToggleSelect = (id: string) => {
+    setSelectedIds(prev => 
+      prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]
+    );
+  };
+
+  const handleToggleSelectAll = () => {
+    const filteredIds = filteredEnquiries.map(e => e.id);
+    if (filteredIds.length === 0) return;
+    const allSelected = filteredIds.every(id => selectedIds.includes(id));
+    
+    if (allSelected) {
+      setSelectedIds(prev => prev.filter(id => !filteredIds.includes(id)));
+    } else {
+      setSelectedIds(prev => Array.from(new Set([...prev, ...filteredIds])));
+    }
+  };
+
+  const handleBulkUpdateStatus = (newStatus: Enquiry['status']) => {
+    validSelectedIds.forEach((id) => {
+      onUpdateStatus(id, newStatus);
+    });
+    setSelectedIds([]);
+  };
+
+  const handleBulkDelete = () => {
+    if (window.confirm(`Are you sure you want to permanently delete the ${validSelectedIds.length} selected lead entries?`)) {
+      validSelectedIds.forEach((id) => {
+        onDeleteEnquiry(id);
+      });
+      setSelectedIds([]);
+    }
+  };
 
   // Dynamically pull distinct service categories for filtering
   const distinctServices = useMemo(() => {
@@ -72,6 +119,8 @@ export default function AdminDashboardSection({
         item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         item.city.toLowerCase().includes(searchTerm.toLowerCase()) ||
         item.phone.includes(searchTerm) ||
+        item.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (item.email ? item.email.toLowerCase().includes(searchTerm.toLowerCase()) : false) ||
         item.message.toLowerCase().includes(searchTerm.toLowerCase());
 
       const matchesStatus = statusFilter === 'All' || item.status === statusFilter;
@@ -115,10 +164,10 @@ export default function AdminDashboardSection({
 
           <button 
             onClick={onToggleAdmin}
-            className="px-6 py-2.5 rounded-full bg-white/10 hover:bg-white/15 text-white border border-white/10 hover:border-white/20 font-mono text-xs tracking-widest uppercase transition-all duration-300 cursor-pointer select-none"
+            className="px-6 py-3 rounded-full bg-[#ff4773]/10 hover:bg-[#ff4773]/20 text-[#ff4773] hover:text-white border border-[#ff4773]/40 hover:border-[#ff4773] font-mono text-xs tracking-wider uppercase transition-all duration-300 cursor-pointer select-none font-bold shadow-[0_0_15px_rgba(255,71,115,0.15)] hover:shadow-[0_0_25px_rgba(255,71,115,0.3)] animate-pulse"
             id="admin-dashboard-exit-btn"
           >
-            Switch to Regular User view
+            ← Exit Admin Dashboard & View Website
           </button>
         </div>
 
@@ -267,11 +316,94 @@ export default function AdminDashboardSection({
 
         {/* Lead entries display table list */}
         <div className="space-y-6">
-          <div className="flex justify-between items-center pl-2">
-            <span className="text-[10px] font-mono uppercase tracking-widest text-neutral-400 font-bold">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-neutral-900/30 p-4 rounded-xl border border-white/5">
+            <div className="flex items-center gap-3">
+              <button
+                type="button"
+                onClick={handleToggleSelectAll}
+                className={`w-5 h-5 rounded border flex items-center justify-center transition-all cursor-pointer ${
+                  filteredEnquiries.length > 0 && filteredEnquiries.every(item => selectedIds.includes(item.id))
+                    ? 'bg-[#ff4773] border-[#ff4773] text-white'
+                    : 'border-white/20 hover:border-white/45 bg-black/40'
+                }`}
+              >
+                {filteredEnquiries.length > 0 && filteredEnquiries.every(item => selectedIds.includes(item.id)) && (
+                  <svg className="w-3.5 h-3.5 stroke-current" viewBox="0 0 24 24" fill="none" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                )}
+              </button>
+              <button
+                type="button"
+                onClick={handleToggleSelectAll}
+                className="text-[10px] font-mono uppercase tracking-widest text-neutral-400 font-bold hover:text-white select-none transition-colors align-middle"
+              >
+                Select All Visible ({filteredEnquiries.length})
+              </button>
+            </div>
+
+            <span className="text-[10px] font-mono uppercase tracking-widest text-[#ffd744] font-semibold">
               Showing {filteredEnquiries.length} of {enquiries.length} matching leads
             </span>
           </div>
+
+          {/* Bulk Action Toolbar */}
+          <AnimatePresence>
+            {validSelectedIds.length > 0 && (
+              <motion.div
+                initial={{ opacity: 0, y: -15, scale: 0.98 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -15, scale: 0.98 }}
+                className="bg-[#141417]/95 border border-[#ff4773]/40 rounded-2xl p-4 flex flex-col md:flex-row justify-between items-center gap-4 shadow-[0_0_25px_rgba(255,71,115,0.12)] z-20 backdrop-blur-md"
+              >
+                <div className="flex items-center gap-3">
+                  <span className="w-2 h-2 rounded-full bg-[#ff4773] animate-ping" />
+                  <span className="text-xs font-mono uppercase tracking-wider text-white">
+                    <strong>{validSelectedIds.length}</strong> {validSelectedIds.length === 1 ? 'Lead' : 'Leads'} Selected
+                  </span>
+                  <button
+                    onClick={() => setSelectedIds([])}
+                    className="text-[10px] font-mono text-neutral-500 hover:text-[#ff4773] underline cursor-pointer"
+                  >
+                    Clear Selection
+                  </button>
+                </div>
+
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="text-[10px] font-mono uppercase text-neutral-500 tracking-wider">Bulk Actions:</span>
+                  
+                  <button
+                    onClick={() => handleBulkUpdateStatus('New')}
+                    className="bg-neutral-950 hover:bg-neutral-900 border border-amber-500/30 hover:border-amber-500 text-amber-400 px-3 py-1.5 rounded-xl text-[10px] font-mono uppercase font-bold transition-all cursor-pointer"
+                  >
+                    🟢 Set New
+                  </button>
+                  <button
+                    onClick={() => handleBulkUpdateStatus('Contacted')}
+                    className="bg-neutral-950 hover:bg-neutral-900 border border-sky-500/30 hover:border-sky-500 text-sky-400 px-3 py-1.5 rounded-xl text-[10px] font-mono uppercase font-bold transition-all cursor-pointer"
+                  >
+                    🔵 Set Contacted
+                  </button>
+                  <button
+                    onClick={() => handleBulkUpdateStatus('In Progress')}
+                    className="bg-neutral-950 hover:bg-neutral-900 border border-emerald-500/30 hover:border-emerald-500 text-emerald-400 px-3 py-1.5 rounded-xl text-[10px] font-mono uppercase font-bold transition-all cursor-pointer"
+                  >
+                    🟡 Set Active
+                  </button>
+
+                  <div className="w-[1px] h-6 bg-white/10 mx-1" />
+
+                  <button
+                    onClick={handleBulkDelete}
+                    className="bg-[#ff4773]/10 hover:bg-[#ff4773]/20 border border-[#ff4773]/40 hover:border-[#ff4773] text-[#ff4773] px-3.5 py-1.5 rounded-xl text-[10px] font-mono uppercase font-black transition-all cursor-pointer flex items-center gap-1.5"
+                  >
+                    <Trash2 className="w-3.5 h-3.5" />
+                    Delete Selected
+                  </button>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           <AnimatePresence mode="popLayout" initial={false}>
             {filteredEnquiries.length === 0 ? (
@@ -297,7 +429,11 @@ export default function AdminDashboardSection({
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.95 }}
                     transition={{ duration: 0.25 }}
-                    className="bg-[#0f0f11] hover:bg-[#121215] border border-white/5 hover:border-[#ff4773]/20 rounded-2xl p-6 transition-all duration-300 flex flex-col justify-between space-y-4"
+                    className={`bg-[#0f0f11] hover:bg-[#121215] border rounded-2xl p-6 transition-all duration-300 flex flex-col justify-between space-y-4 ${
+                      selectedIds.includes(item.id)
+                        ? 'border-[#ff4773]/50 shadow-[0_0_15px_rgba(255,71,115,0.05)] bg-[#121013]'
+                        : 'border-white/5 hover:border-[#ff4773]/20'
+                    }`}
                     id={`dashboard-inquiry-card-${item.id}`}
                   >
                     
@@ -305,14 +441,39 @@ export default function AdminDashboardSection({
                     <div className="space-y-3">
                       
                       <div className="flex justify-between items-start gap-4">
-                        <div className="space-y-1">
-                          <h3 className="font-sans font-black text-white text-lg tracking-wide leading-tight uppercase">
-                            {item.name}
-                          </h3>
-                          <span className="inline-flex items-center text-[9px] font-mono text-neutral-500">
-                            <Calendar className="w-3 h-3 mr-1 text-[#ffd744]" />
-                            {item.timestamp}
-                          </span>
+                        <div className="flex items-start gap-3 min-w-0">
+                          {/* Checkbox for single card selection */}
+                          <button
+                            type="button"
+                            onClick={() => handleToggleSelect(item.id)}
+                            className={`w-5 h-5 rounded border flex items-center justify-center transition-all cursor-pointer shrink-0 mt-0.5 ${
+                              selectedIds.includes(item.id)
+                                ? 'bg-[#ff4773] border-[#ff4773] text-white shadow-[0_0_8px_rgba(255,71,115,0.3)]'
+                                : 'border-white/20 hover:border-white/45 bg-black/40'
+                            }`}
+                            title="Select lead"
+                          >
+                            {selectedIds.includes(item.id) && (
+                              <svg className="w-3.5 h-3.5 stroke-current" viewBox="0 0 24 24" fill="none" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                                <polyline points="20 6 9 17 4 12" />
+                              </svg>
+                            )}
+                          </button>
+
+                          <div className="space-y-1 min-w-0">
+                            <div className="flex items-center gap-2 flex-wrap">
+                              <h3 className="font-sans font-black text-white text-lg tracking-wide leading-tight uppercase truncate">
+                                {item.name}
+                              </h3>
+                              <span className="px-1.5 py-0.5 bg-neutral-950 border border-white/10 rounded font-mono text-[9px] text-[#ffd744] uppercase tracking-wider font-bold shrink-0">
+                                {item.id}
+                              </span>
+                            </div>
+                            <span className="inline-flex items-center text-[9px] font-mono text-neutral-500">
+                              <Calendar className="w-3 h-3 mr-1 text-[#ffd744]" />
+                              {item.timestamp}
+                            </span>
+                          </div>
                         </div>
 
                         {/* Actions block row */}
@@ -375,6 +536,17 @@ export default function AdminDashboardSection({
                             {item.phone}
                           </p>
                         </div>
+                        {item.email && (
+                          <div className="col-span-2 space-y-0.5 border-t border-white/[0.03] pt-2">
+                            <p className="text-[9px] font-mono text-neutral-500 uppercase tracking-wide">
+                              Customer Email Address
+                            </p>
+                            <p className="text-neutral-350 hover:text-white font-mono text-[11px] truncate flex items-center gap-1.5 transition-colors">
+                              <Mail className="w-3 h-3 text-[#ffd744] shrink-0" />
+                              {item.email}
+                            </p>
+                          </div>
+                        )}
                       </div>
 
                       {/* Brief text */}
@@ -390,21 +562,167 @@ export default function AdminDashboardSection({
 
                     </div>
 
-                    {/* Attachment detail block if available */}
-                    {item.uploadedFile && (
-                      <div className="text-xs bg-emerald-500/5 border border-emerald-500/10 rounded-xl p-3 flex items-center justify-between">
-                        <div className="flex items-center space-x-2.5">
-                          <div className="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/25 flex items-center justify-center text-emerald-400 shrink-0">
-                            <FileCheck className="w-4 h-4 text-emerald-400" />
-                          </div>
-                          <div className="text-left">
-                            <p className="text-white font-bold block max-w-[180px] truncate">{item.uploadedFile.name}</p>
-                            <span className="text-[9px] font-mono text-emerald-400 font-extrabold pb-0.5 block">VECTOR DIRECT MATCH ({item.uploadedFile.type})</span>
-                          </div>
-                        </div>
-                        <span className="text-[10px] text-neutral-400 font-mono shrink-0 bg-neutral-950 px-2 py-0.5 rounded border border-white/5">
-                          {item.uploadedFile.size}
+                    {/* Brand Social Leads or Web Design Links */}
+                    {(item.imageUrl || item.facebookLink || item.instagramLink || item.otherLink) && (
+                      <div className="space-y-2 pt-2 border-t border-white/[0.03]">
+                        <span className="text-[10px] font-mono text-neutral-500 uppercase tracking-widest font-semibold block">
+                          Specified Design Asset Links:
                         </span>
+                        <div className="flex flex-wrap gap-2">
+                          {item.imageUrl && (
+                            <a
+                              href={item.imageUrl}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-sky-950/40 border border-sky-500/20 hover:border-sky-450 hover:bg-sky-900/40 text-sky-400 transition-colors"
+                            >
+                              <Globe className="w-3.5 h-3.5 text-sky-400" />
+                              <span>Image Link</span>
+                            </a>
+                          )}
+                          {item.facebookLink && (
+                            <a
+                              href={item.facebookLink}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-blue-950/40 border border-blue-500/20 hover:border-blue-450 hover:bg-blue-900/40 text-blue-400 transition-colors"
+                            >
+                              <Facebook className="w-3.5 h-3.5 text-[#1877F2]" />
+                              <span>Facebook Lead</span>
+                            </a>
+                          )}
+                          {item.instagramLink && (
+                            <a
+                              href={item.instagramLink}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-pink-950/40 border border-pink-500/20 hover:border-pink-450 hover:bg-pink-900/40 text-pink-400 transition-colors"
+                            >
+                              <Instagram className="w-3.5 h-3.5 text-[#E1306C]" />
+                              <span>Instagram Portfolio</span>
+                            </a>
+                          )}
+                          {item.otherLink && (
+                            <a
+                              href={item.otherLink}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-emerald-950/40 border border-emerald-500/20 hover:border-emerald-450 hover:bg-emerald-900/40 text-emerald-400 transition-colors"
+                            >
+                              <Link2 className="w-3.5 h-3.5 text-emerald-450" />
+                              <span>Drive Folder</span>
+                            </a>
+                          )}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Attachment details block for multi-file customer uploads */}
+                    {((item.uploadedFiles && item.uploadedFiles.length > 0) || item.uploadedFile) && (
+                      <div className="space-y-2 pt-2 border-t border-white/[0.03]">
+                        <span className="text-[10px] font-mono text-neutral-500 uppercase tracking-widest font-semibold block">
+                          Attached Customer Artwork Files ({item.uploadedFiles ? item.uploadedFiles.length : 1}):
+                        </span>
+
+                        <div className="grid grid-cols-1 gap-2">
+                          {(item.uploadedFiles || [item.uploadedFile]).map((file, fIdx) => {
+                            if (!file) return null;
+                            const isImg = file.type === 'PNG' || file.type === 'JPG' || file.type === 'JPEG' || file.type === 'SVG';
+                            
+                            return (
+                              <div key={fIdx} className="text-xs bg-emerald-500/5 border border-emerald-500/10 rounded-xl p-3 flex items-center justify-between gap-3 text-left">
+                                <div className="flex items-center space-x-2.5 min-w-0">
+                                  {isImg && file.previewUrl ? (
+                                    <div className="w-10 h-10 rounded overflow-hidden border border-emerald-500/20 bg-black/40 cursor-zoom-in shrink-0"
+                                         onClick={() => {
+                                           const w = window.open();
+                                           if (w) w.document.write(`<img src="${file.previewUrl}" style="max-width:100%; max-height:100vh; display:block; margin:auto; background:#111; padding:20px;" />`);
+                                         }}
+                                         title="Click to zoom in"
+                                    >
+                                      <img src={file.previewUrl} alt="Preview" className="w-full h-full object-cover" />
+                                    </div>
+                                  ) : (
+                                    <div className="w-10 h-10 rounded bg-emerald-500/10 border border-emerald-500/25 flex items-center justify-center text-emerald-455 shrink-0">
+                                      <FileText className="w-4 h-4 text-emerald-400" />
+                                    </div>
+                                  )}
+                                  <div className="text-left min-w-0">
+                                    <p className="text-white font-bold block truncate max-w-[150px] sm:max-w-xs">{file.name}</p>
+                                    <span className="text-[8px] font-mono text-emerald-400 font-extrabold pb-0.5 block">VECTOR COMPATIBLE ({file.type})</span>
+                                  </div>
+                                </div>
+
+                                <div className="flex items-center gap-1.5 flex-wrap shrink-0">
+                                  <span className="text-[10px] text-neutral-400 font-mono bg-neutral-950 px-2 py-0.5 rounded border border-white/5">
+                                    {file.size}
+                                  </span>
+                                  {file.previewUrl && (
+                                    <>
+                                      <button
+                                        type="button"
+                                        onClick={() => {
+                                          const w = window.open();
+                                          if (w) {
+                                            if (file.previewUrl?.startsWith('data:application/pdf')) {
+                                              w.document.write(`<iframe src="${file.previewUrl}" style="width:100%; height:100vh; border:none;"></iframe>`);
+                                            } else {
+                                              w.document.write(`<img src="${file.previewUrl}" style="max-width:100%; max-height:100vh; display:block; margin:auto; background:#111; padding:20px;" />`);
+                                            }
+                                          }
+                                        }}
+                                        className="text-[9px] font-mono text-[#ff4773] hover:underline bg-[#ff4773]/10 hover:bg-[#ff4773]/20 px-2 py-1 rounded cursor-pointer border border-[#ff4773]/30 flex items-center gap-0.5"
+                                        title="Open file in a new window"
+                                      >
+                                        👁️ OPEN
+                                      </button>
+
+                                      <button
+                                        type="button"
+                                        onClick={() => {
+                                          const link = document.createElement('a');
+                                          link.href = file.previewUrl || '';
+                                          link.download = file.name;
+                                          document.body.appendChild(link);
+                                          link.click();
+                                          document.body.removeChild(link);
+                                        }}
+                                        className="text-[9px] font-mono text-emerald-400 hover:underline bg-emerald-500/10 hover:bg-emerald-500/20 px-2 py-1 rounded cursor-pointer border border-emerald-500/30 flex items-center gap-0.5"
+                                        title="Save file to device"
+                                      >
+                                        💾 SAVE
+                                      </button>
+
+                                      <button
+                                        type="button"
+                                        onClick={async () => {
+                                          if (navigator.share) {
+                                            try {
+                                              await navigator.share({
+                                                title: `Artwork: ${file.name}`,
+                                                text: `Check out the artwork file from lead: ${item.name}`,
+                                                url: window.location.href
+                                              });
+                                            } catch (err) {
+                                              console.log("Sharing failed", err);
+                                            }
+                                          } else {
+                                            const shareText = `Lead Name: ${item.name}%0AFile: ${file.name}`;
+                                            window.open(`https://api.whatsapp.com/send?text=${shareText}`, '_blank');
+                                          }
+                                        }}
+                                        className="text-[9px] font-mono text-sky-400 hover:underline bg-sky-500/10 hover:bg-sky-500/20 px-2 py-1 rounded cursor-pointer border border-sky-500/30 flex items-center gap-0.5"
+                                        title="Share file details"
+                                      >
+                                        🔗 SHARE
+                                      </button>
+                                    </>
+                                  )}
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </div>
                       </div>
                     )}
 
