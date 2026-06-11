@@ -36,4 +36,10 @@ export interface Enquiry {
   message: string;
   timestamp: string;
   status: 'New' | 'Contacted' | 'In Progress';
+  uploadedFile?: {
+    name: string;
+    size: string;
+    type: string;
+    previewUrl?: string;
+  };
 }

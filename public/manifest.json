@@ -1,16 +1,42 @@
 {
+  "id": "com.anshuprints.app",
   "name": "Anshu Prints - Premium Luxury Signage",
   "short_name": "Anshu",
   "description": "From luxury neon signage to premium corporate gifting, we turn your vision into tangible perfection.",
-  "start_url": "/",
+  "start_url": "/?pwa=true",
   "display": "standalone",
   "orientation": "portrait-primary",
-  "background_color": "#000000",
+  "background_color": "#030303",
   "theme_color": "#0D0D0F",
+  "categories": ["business", "shopping", "utilities"],
   "icons": [
     {
       "src": "/icon-512.png",
-      "sizes": "512x512",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "152x152",
       "type": "image/png",
       "purpose": "any"
     },
@@ -22,9 +48,37 @@
     },
     {
       "src": "/icon-512.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Submit Custom Design",
+      "short_name": "Inquire",
+      "description": "Upload a vector file or image artwork for a custom luxury fabrication quote.",
+      "url": "/#contact",
+      "icons": [{ "src": "/icon-512.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "View Client Portfolio",
+      "short_name": "Portfolio",
+      "description": "Browse actual close-up photos and specs of completed executive B2B projects.",
+      "url": "/#trust-portfolio",
+      "icons": [{ "src": "/icon-512.png", "sizes": "192x192" }]
     }
   ]
 }

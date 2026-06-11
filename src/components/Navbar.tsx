@@ -1,17 +1,62 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Sparkles, Menu, X, MessageSquare, Phone, MapPin, Mail, ClipboardList, Send, Trash2 } from 'lucide-react';
+import { Sparkles, Menu, X, MessageSquare, Phone, MapPin, Mail, ClipboardList, Send, Trash2, Lock, Shield, Check } from 'lucide-react';
 import { Enquiry } from '../types';
 
 interface NavbarProps {
   onOpenEnquiries: () => void;
   enquiriesCount: number;
+  isAdmin: boolean;
+  onToggleAdmin: () => void;
 }
 
-export default function Navbar({ onOpenEnquiries, enquiriesCount }: NavbarProps) {
+export default function Navbar({ onOpenEnquiries, enquiriesCount, isAdmin, onToggleAdmin }: NavbarProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
+
+  // Secret passcode control mechanisms
+  const [logoClicks, setLogoClicks] = useState(0);
+  const [showPassModal, setShowPassModal] = useState(false);
+  const [passcodeInput, setPasscodeInput] = useState('');
+  const [passcodeError, setPasscodeError] = useState(false);
+
+  useEffect(() => {
+    if (logoClicks > 0) {
+      const timer = setTimeout(() => {
+        setLogoClicks(0);
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [logoClicks]);
+
+  const handleLogoClick = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setLogoClicks((prev) => {
+      const next = prev + 1;
+      if (next >= 5) {
+        setShowPassModal(true);
+        setPasscodeInput('');
+        setPasscodeError(false);
+        return 0;
+      }
+      return next;
+    });
+  };
+
+  const handleVerifyPasscode = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (passcodeInput.trim() === '1212') {
+      if (!isAdmin) {
+        onToggleAdmin(); // Set admin mode
+      }
+      setShowPassModal(false);
+      setPasscodeInput('');
+      setPasscodeError(false);
+    } else {
+      setPasscodeError(true);
+    }
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -92,7 +137,7 @@ export default function Navbar({ onOpenEnquiries, enquiriesCount }: NavbarProps)
         <div className="max-w-7xl mx-auto px-4 md:px-6 h-16 md:h-24 flex items-center justify-between">
           {/* Custom Styled Luxury Monogram Badge Logo (Compact Row on mobile, standard on desktop) */}
           <button 
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            onClick={handleLogoClick}
             className="flex flex-row items-center gap-2.5 bg-black border border-white/5 px-2.5 py-1.5 hover:border-[#d9869d]/40 transition-all duration-300 rounded-lg group focus:outline-none cursor-pointer"
             id="nav-logo-btn"
           >
@@ -184,38 +229,76 @@ export default function Navbar({ onOpenEnquiries, enquiriesCount }: NavbarProps)
               </a>
             </div>
 
-            <div className="w-[1px] h-6 bg-white/10 mx-2" />
-
+            {/* Always visible role switcher button for preview testing */}
             <button
-              onClick={onOpenEnquiries}
-              className="relative flex items-center space-x-2 px-4 py-2 rounded-full bg-neutral-950 border border-white/10 hover:border-[#d9869d]/50 hover:bg-neutral-900 transition-all duration-300 text-xs font-bold tracking-wider text-[#d9869d] cursor-pointer focus:outline-none"
-              id="btn-open-enquiries"
+              onClick={onToggleAdmin}
+              className={`flex items-center space-x-1.5 px-3.5 py-2 rounded-full border transition-all duration-300 text-xs font-bold tracking-wider cursor-pointer ${
+                isAdmin 
+                  ? 'bg-[#ff4773]/15 border-[#ff4773]/40 text-[#ff4773] hover:bg-[#ff4773]/25 shadow-[0_0_12px_rgba(255,71,115,0.15)]' 
+                  : 'bg-neutral-950 border-white/10 text-neutral-400 hover:border-white/20 hover:text-white'
+              }`}
+              id="btn-toggle-admin-role"
+              title="Toggle Client/Admin View Mode"
             >
-              <ClipboardList className="w-3.5 h-3.5" />
-              <span>INQUIRIES</span>
-              {enquiriesCount > 0 && (
-                <span className="absolute -top-1.5 -right-1.5 bg-[#d9869d] text-neutral-950 font-black px-2 py-0.5 rounded-full text-[9px] flex items-center justify-center animate-bounce">
-                  {enquiriesCount}
-                </span>
-              )}
+              <span className={`w-1.5 h-1.5 rounded-full ${isAdmin ? 'bg-[#ff4773] animate-ping' : 'bg-neutral-500'}`} />
+              <span className="font-mono text-[9px] uppercase tracking-wider">
+                {isAdmin ? 'ADMIN ACTIVE' : 'USER VIEW'}
+              </span>
             </button>
+
+            {isAdmin && (
+              <>
+                <div className="w-[1px] h-6 bg-white/10 mx-2" />
+
+                <button
+                  onClick={onOpenEnquiries}
+                  className="relative flex items-center space-x-2 px-4 py-2 rounded-full bg-neutral-950 border border-[#d9869d]/40 hover:border-[#d9869d] text-[#d9869d] hover:bg-neutral-900 transition-all duration-300 text-xs font-bold tracking-wider cursor-pointer focus:outline-none"
+                  id="btn-open-enquiries"
+                  title="View Customer Inquiries Panel"
+                >
+                  <ClipboardList className="w-3.5 h-3.5" />
+                  <span>VIEW LEADS</span>
+                  {enquiriesCount > 0 && (
+                    <span className="absolute -top-1.5 -right-1.5 bg-[#d9869d] text-neutral-950 font-black px-2 py-0.5 rounded-full text-[9px] flex items-center justify-center animate-bounce">
+                      {enquiriesCount}
+                    </span>
+                  )}
+                </button>
+              </>
+            )}
           </div>
 
           {/* Mobile Right Block (Inquiries button & Hamburger) */}
-          <div className="flex lg:hidden items-center space-x-3.5">
+          <div className="flex lg:hidden items-center space-x-2.5">
+            {/* Always visible role switcher button for preview mobile testing */}
             <button
-              onClick={onOpenEnquiries}
-              className="relative p-2.5 rounded-full bg-neutral-900 border border-white/10 text-gold-400 focus:outline-none"
-              title="View Inquiries"
-              id="mobile-vault-trigger"
+              onClick={onToggleAdmin}
+              className={`px-3 py-1.5 rounded-full border transition-all duration-300 font-mono text-[9px] font-extrabold uppercase tracking-wider cursor-pointer select-none ${
+                isAdmin 
+                  ? 'bg-[#ff4773]/15 border-[#ff4773]/40 text-[#ff4773]' 
+                  : 'bg-neutral-900 border-white/5 text-neutral-500'
+              }`}
+              title="Toggle Client/Admin View Mode"
+              id="mobile-toggle-role-btn"
             >
-              <ClipboardList className="w-4 h-4" />
-              {enquiriesCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-[#d9869d] text-neutral-950 font-bold px-1.5 py-0.2 rounded-full text-[8px] flex items-center justify-center animate-pulse">
-                  {enquiriesCount}
-                </span>
-              )}
+              {isAdmin ? 'ADMIN' : 'USER'}
             </button>
+
+            {isAdmin && (
+              <button
+                onClick={onOpenEnquiries}
+                className="relative p-2.5 rounded-full bg-neutral-900 border border-white/10 text-gold-400 focus:outline-none"
+                title="View Customer Inquiries"
+                id="mobile-vault-trigger"
+              >
+                <ClipboardList className="w-4 h-4" />
+                {enquiriesCount > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-[#d9869d] text-neutral-950 font-bold px-1.5 py-0.2 rounded-full text-[8px] flex items-center justify-center animate-pulse">
+                    {enquiriesCount}
+                  </span>
+                )}
+              </button>
+            )}
 
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -296,6 +379,97 @@ export default function Navbar({ onOpenEnquiries, enquiriesCount }: NavbarProps)
               <p className="text-xs text-neutral-500 font-mono">
                 ANSHU • Handcrafting Divine Prints
               </p>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {showPassModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/85 backdrop-blur-xl z-[150] flex items-center justify-center p-4"
+            onClick={() => setShowPassModal(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.95, y: 15, opacity: 0 }}
+              animate={{ scale: 1, y: 0, opacity: 1 }}
+              exit={{ scale: 0.95, y: 15, opacity: 0 }}
+              transition={{ type: "spring", duration: 0.5 }}
+              className="bg-neutral-950 border border-white/10 rounded-2xl max-w-sm w-full p-6 text-center space-y-5 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9)] relative overflow-hidden"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Decorative top pink highlight bar */}
+              <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-[#d9869d] via-[#ff4773] to-[#d9869d]" />
+
+              {/* Icon */}
+              <div className="mx-auto w-12 h-12 rounded-full bg-[#ff4773]/10 border border-[#ff4773]/30 flex items-center justify-center text-[#ff4773] shadow-[0_0_15px_rgba(255,71,115,0.15)]">
+                <Lock className="w-5 h-5 animate-pulse" />
+              </div>
+
+              {/* Header Title */}
+              <div className="space-y-1">
+                <h3 className="font-sans text-xs font-black text-[#ffd744] uppercase tracking-[0.2em]">
+                  ANSHU SYSTEM SECURE INTERACTION
+                </h3>
+                <p className="text-[10px] uppercase font-mono tracking-wider text-neutral-450">
+                  Manager CRM Gateway Protocol
+                </p>
+              </div>
+
+              {/* Form body */}
+              <form onSubmit={handleVerifyPasscode} className="space-y-4">
+                <div className="space-y-2 text-left">
+                  <label className="text-[9px] font-mono font-extrabold uppercase tracking-widest text-[#d9869d] pl-1 block">
+                    Access Pin Required
+                  </label>
+                  <input
+                    type="password"
+                    pattern="[0-9]*"
+                    autoFocus
+                    placeholder="Enter Security Access Key..."
+                    value={passcodeInput}
+                    onChange={(e) => {
+                      setPasscodeInput(e.target.value);
+                      if (passcodeError) setPasscodeError(false);
+                    }}
+                    className={`w-full bg-neutral-900 border ${
+                      passcodeError ? 'border-red-500/70 focus:ring-red-550' : 'border-[#ff4773]/40'
+                    } text-white font-mono tracking-[0.4em] text-center text-sm rounded-xl py-3 px-4 focus:outline-none focus:ring-1 focus:ring-[#d9869d]/40 transition-all placeholder:tracking-normal placeholder:font-sans placeholder:text-neutral-600 placeholder:text-center placeholder:text-xs`}
+                  />
+                  {passcodeError && (
+                    <motion.p 
+                      initial={{ opacity: 0, y: -5 }} 
+                      animate={{ opacity: 1, y: 0 }}
+                      className="text-[9px] font-mono text-red-400 pl-1 font-bold block"
+                    >
+                      ❌ ERROR: Invalid credentials.
+                    </motion.p>
+                  )}
+                  <p className="text-[9px] font-mono text-neutral-400 pl-1 pt-1 leading-relaxed opacity-85">
+                    *Hint: Enter '1212' to unlock admin views (artwork direct testing & lead submissions manager).*
+                  </p>
+                </div>
+
+                {/* Submits */}
+                <div className="grid grid-cols-2 gap-3 pt-2">
+                  <button
+                    type="button"
+                    onClick={() => setShowPassModal(false)}
+                    className="w-full py-2.5 rounded-xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.05] font-mono text-[9px] uppercase tracking-widest text-neutral-400 hover:text-white transition-colors cursor-pointer"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="w-full py-2.5 rounded-xl bg-gradient-to-r from-[#d9869d] to-[#ff4773] hover:from-[#e98fa7] hover:to-[#ff5c84] text-neutral-950 font-sans font-black text-[10px] uppercase tracking-wider transition-all duration-300 shadow-[0_4px_20px_rgba(255,71,115,0.25)] hover:shadow-[0_4px_20px_rgba(255,71,115,0.4)] cursor-pointer"
+                  >
+                    Verify Access
+                  </button>
+                </div>
+              </form>
             </motion.div>
           </motion.div>
         )}

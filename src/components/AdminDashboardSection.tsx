@@ -1,0 +1,422 @@
+import React, { useState, useMemo } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import { 
+  Shield, 
+  Trash2, 
+  ClipboardList, 
+  Calendar, 
+  MessageSquare, 
+  PhoneCall, 
+  Search, 
+  Filter, 
+  MapPin, 
+  TrendingUp, 
+  Clock, 
+  Briefcase, 
+  CheckCircle,
+  FileCheck,
+  Activity,
+  AlertCircle
+} from 'lucide-react';
+import { Enquiry } from '../types';
+
+interface AdminDashboardSectionProps {
+  enquiries: Enquiry[];
+  onDeleteEnquiry: (id: string) => void;
+  onUpdateStatus: (id: string, newStatus: Enquiry['status']) => void;
+  onToggleAdmin: () => void;
+}
+
+export default function AdminDashboardSection({
+  enquiries,
+  onDeleteEnquiry,
+  onUpdateStatus,
+  onToggleAdmin
+}: AdminDashboardSectionProps) {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [statusFilter, setStatusFilter] = useState<'All' | Enquiry['status']>('All');
+  const [serviceFilter, setServiceFilter] = useState('All');
+
+  // Dynamically pull distinct service categories for filtering
+  const distinctServices = useMemo(() => {
+    const list = enquiries.map((item) => item.serviceType);
+    return ['All', ...Array.from(new Set(list))];
+  }, [enquiries]);
+
+  // Compute CRM metrics
+  const metrics = useMemo(() => {
+    const total = enquiries.length;
+    const pending = enquiries.filter((e) => e.status === 'New').length;
+    const contacted = enquiries.filter((e) => e.status === 'Contacted').length;
+    const active = enquiries.filter((e) => e.status === 'In Progress').length;
+    
+    // Estimate luxury budget pipeline
+    let totalValueCount = 0;
+    enquiries.forEach((item) => {
+      if (item.budgetRange.includes('Elite')) {
+        totalValueCount += 150000; // Estimated baseline
+      } else if (item.budgetRange.includes('Premium')) {
+        totalValueCount += 35000;
+      } else {
+        totalValueCount += 10000;
+      }
+    });
+
+    return { total, pending, contacted, active, estPipeline: totalValueCount };
+  }, [enquiries]);
+
+  // Filter inquiries matching both search text, selected status, and selected category
+  const filteredEnquiries = useMemo(() => {
+    return enquiries.filter((item) => {
+      const matchesSearch = 
+        item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.city.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.phone.includes(searchTerm) ||
+        item.message.toLowerCase().includes(searchTerm.toLowerCase());
+
+      const matchesStatus = statusFilter === 'All' || item.status === statusFilter;
+      const matchesService = serviceFilter === 'All' || item.serviceType === serviceFilter;
+
+      return matchesSearch && matchesStatus && matchesService;
+    });
+  }, [enquiries, searchTerm, statusFilter, serviceFilter]);
+
+  return (
+    <section 
+      id="admin-crm-dashboard" 
+      className="relative py-24 bg-neutral-950 border-t-2 border-[#ff4773]/30 overflow-hidden"
+    >
+      {/* Absolute Tech Grid Background Pattern */}
+      <div className="absolute inset-0 bg-[#070708] opacity-95" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:16px_16px] pointer-events-none" />
+      
+      {/* Fluid Pink and Yellow Orbs */}
+      <div className="absolute top-1/4 left-1/3 w-[30rem] h-[30rem] bg-[#ff4773]/5 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/4 w-[30rem] h-[30rem] bg-[#ffd744]/3 rounded-full blur-[140px] pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto px-6 relative z-10 space-y-12">
+        
+        {/* Dashboard Header Bar */}
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 pb-6 border-b border-white/5">
+          <div className="space-y-2">
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#ff4773]/10 border border-[#ff4773]/20 rounded-full">
+              <Shield className="w-3.5 h-3.5 text-[#ff4773]" />
+              <span className="text-[10px] font-mono font-bold tracking-widest text-[#ff4773] uppercase">
+                Anshu Prints Lead CRM
+              </span>
+            </div>
+            <h2 className="text-3xl sm:text-5xl font-sans font-black text-white tracking-tight">
+              ADMIN CONTROL CENTER
+            </h2>
+            <p className="text-xs text-neutral-400 font-mono tracking-wider max-w-2xl uppercase">
+              Live Leads Routing and Vector Compatibility Submissions Control Board.
+            </p>
+          </div>
+
+          <button 
+            onClick={onToggleAdmin}
+            className="px-6 py-2.5 rounded-full bg-white/10 hover:bg-white/15 text-white border border-white/10 hover:border-white/20 font-mono text-xs tracking-widest uppercase transition-all duration-300 cursor-pointer select-none"
+            id="admin-dashboard-exit-btn"
+          >
+            Switch to Regular User view
+          </button>
+        </div>
+
+        {/* Analytics cards grid */}
+        <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
+          
+          {/* Card 1: Total Leads */}
+          <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-5 hover:border-[#ff4773]/20 transition-all duration-300 flex flex-col justify-between">
+            <div className="text-neutral-500 font-mono text-[9px] uppercase tracking-widest flex items-center justify-between">
+              Total Inquiries
+              <ClipboardList className="w-4 h-4 text-neutral-400" />
+            </div>
+            <div className="mt-4">
+              <span className="font-sans font-black text-white text-3xl block">
+                {metrics.total}
+              </span>
+              <span className="text-[10px] text-neutral-400 font-mono">Records Tracked</span>
+            </div>
+          </div>
+
+          {/* Card 2: New Submissions Indicator */}
+          <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-5 hover:border-amber-500/20 transition-all duration-300 flex flex-col justify-between">
+            <div className="text-neutral-400 font-mono text-[9px] uppercase tracking-widest flex items-center justify-between">
+              New Leads
+              <span className="w-2.5 h-2.5 rounded-full bg-amber-500 animate-ping" />
+            </div>
+            <div className="mt-4">
+              <span className="font-sans font-black text-amber-400 text-3xl block">
+                {metrics.pending}
+              </span>
+              <span className="text-[10px] text-neutral-500 font-mono">Needs Action</span>
+            </div>
+          </div>
+
+          {/* Card 3: Contacted Submissions */}
+          <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-5 hover:border-sky-500/20 transition-all duration-300 flex flex-col justify-between">
+            <div className="text-neutral-500 font-mono text-[9px] uppercase tracking-widest flex items-center justify-between">
+              Contacted status
+              <Clock className="w-4 h-4 text-sky-450" />
+            </div>
+            <div className="mt-4">
+              <span className="font-sans font-black text-sky-400 text-3xl block">
+                {metrics.contacted}
+              </span>
+              <span className="text-[10px] text-neutral-400 font-mono">Assigned Manager</span>
+            </div>
+          </div>
+
+          {/* Card 4: Active Projects */}
+          <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-5 hover:border-emerald-500/20 transition-all duration-300 flex flex-col justify-between">
+            <div className="text-neutral-500 font-mono text-[9px] uppercase tracking-widest flex items-center justify-between">
+              Active Signage Work
+              <TrendingUp className="w-4 h-4 text-emerald-455" />
+            </div>
+            <div className="mt-4">
+              <span className="font-sans font-black text-emerald-400 text-3xl block">
+                {metrics.active}
+              </span>
+              <span className="text-[10px] text-neutral-450 font-mono">Fabrication Status</span>
+            </div>
+          </div>
+
+          {/* Card 5: Estimated Pipeline Value */}
+          <div className="col-span-2 lg:col-span-1 bg-white/[0.02] border border-[#ffd744]/25 rounded-2xl p-5 flex flex-col justify-between shadow-[0_0_15px_rgba(254,215,68,0.05)]">
+            <div className="text-neutral-400 font-mono text-[9px] uppercase tracking-widest flex items-center justify-between">
+              Est. Pipeline
+              <span className="px-1.5 py-0.5 rounded bg-[#ffd744]/10 text-[#ffd744] text-[8px] font-black">VALUED</span>
+            </div>
+            <div className="mt-4">
+              <span className="font-sans font-black text-[#ffd744] text-2.5xl block truncate">
+                ₹{metrics.estPipeline.toLocaleString('en-IN')}
+              </span>
+              <span className="text-[10px] text-neutral-400 font-mono">Active Value</span>
+            </div>
+          </div>
+
+        </div>
+
+        {/* Live Filter Controls */}
+        <div className="bg-neutral-900/60 border border-white/5 rounded-2xl p-6 grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+          
+          {/* Live search input */}
+          <div className="md:col-span-4 relative">
+            <Search className="w-4 h-4 text-neutral-500 absolute left-4.5 top-1/2 -translate-y-1/2" />
+            <input 
+              type="text"
+              placeholder="Search Client, City, Phone, Message..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full bg-neutral-950 border border-white/10 rounded-xl py-3 pl-11 pr-4 text-xs font-mono text-white placeholder-neutral-600 focus:outline-none focus:border-[#ff4773]/50 transition-colors"
+            />
+          </div>
+
+          {/* Status selector filter */}
+          <div className="md:col-span-3 flex flex-col">
+            <div className="flex items-center gap-1.5 text-[9px] font-mono uppercase tracking-widest text-[#ffd744] mb-1.5 pl-1 font-bold">
+              <Filter className="w-3 h-3 text-gold-400" />
+              Filter By Status
+            </div>
+            <select
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value as any)}
+              className="bg-neutral-950 border border-white/10 rounded-xl py-3 px-4 text-xs font-mono text-white focus:outline-none focus:border-[#ff4773]/50 transition-colors cursor-pointer"
+            >
+              <option value="All">All Lead Statuses</option>
+              <option value="New">🟢 New Leads Only</option>
+              <option value="Contacted">🔵 Contacted Leads Only</option>
+              <option value="In Progress">🟡 Active Pipeline Only</option>
+            </select>
+          </div>
+
+          {/* Service filter dropdown */}
+          <div className="md:col-span-3 flex flex-col">
+            <div className="flex items-center gap-1.5 text-[9px] font-mono uppercase tracking-widest text-[#ffd744] mb-1.5 pl-1 font-bold">
+              <Briefcase className="w-3 h-3 text-gold-400" />
+              Category Required
+            </div>
+            <select
+              value={serviceFilter}
+              onChange={(e) => setServiceFilter(e.target.value)}
+              className="bg-neutral-950 border border-white/10 rounded-xl py-3 px-4 text-xs font-mono text-white focus:outline-none focus:border-[#ff4773]/50 transition-colors cursor-pointer"
+            >
+              {distinctServices.map((service) => (
+                <option key={service} value={service}>
+                  {service === 'All' ? 'All Service Categories' : service}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Reset Filters Quick Button */}
+          <div className="md:col-span-2 pt-5">
+            <button
+              onClick={() => {
+                setSearchTerm('');
+                setStatusFilter('All');
+                setServiceFilter('All');
+              }}
+              className="w-full bg-neutral-950 hover:bg-neutral-900 text-neutral-400 hover:text-white border border-white/10 rounded-xl py-3 text-xs font-mono transition-colors uppercase cursor-pointer"
+            >
+              Reset Filters
+            </button>
+          </div>
+
+        </div>
+
+        {/* Lead entries display table list */}
+        <div className="space-y-6">
+          <div className="flex justify-between items-center pl-2">
+            <span className="text-[10px] font-mono uppercase tracking-widest text-neutral-400 font-bold">
+              Showing {filteredEnquiries.length} of {enquiries.length} matching leads
+            </span>
+          </div>
+
+          <AnimatePresence mode="popLayout" initial={false}>
+            {filteredEnquiries.length === 0 ? (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.98 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0 }}
+                className="border border-white/5 bg-neutral-900/10 rounded-2xl p-12 text-center"
+              >
+                <ClipboardList className="w-12 h-12 text-neutral-600 mx-auto mb-3" />
+                <h4 className="text-neutral-400 text-sm font-semibold">No Matching Inquiries Found</h4>
+                <p className="text-xs text-neutral-600 mt-1 max-w-sm mx-auto leading-relaxed uppercase font-mono">
+                  No records match your exact search criteria. Try removing status or query filters.
+                </p>
+              </motion.div>
+            ) : (
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {filteredEnquiries.map((item) => (
+                  <motion.div
+                    key={item.id}
+                    layout
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    transition={{ duration: 0.25 }}
+                    className="bg-[#0f0f11] hover:bg-[#121215] border border-white/5 hover:border-[#ff4773]/20 rounded-2xl p-6 transition-all duration-300 flex flex-col justify-between space-y-4"
+                    id={`dashboard-inquiry-card-${item.id}`}
+                  >
+                    
+                    {/* Top block */}
+                    <div className="space-y-3">
+                      
+                      <div className="flex justify-between items-start gap-4">
+                        <div className="space-y-1">
+                          <h3 className="font-sans font-black text-white text-lg tracking-wide leading-tight uppercase">
+                            {item.name}
+                          </h3>
+                          <span className="inline-flex items-center text-[9px] font-mono text-neutral-500">
+                            <Calendar className="w-3 h-3 mr-1 text-[#ffd744]" />
+                            {item.timestamp}
+                          </span>
+                        </div>
+
+                        {/* Actions block row */}
+                        <div className="flex items-center space-x-1.5">
+                          <select
+                            value={item.status}
+                            onChange={(e) => onUpdateStatus(item.id, e.target.value as any)}
+                            className={`text-[9px] font-mono font-bold rounded-lg px-2 py-1 bg-neutral-950 border focus:outline-none transition-all cursor-pointer ${
+                              item.status === 'New'
+                                ? 'border-amber-500/40 text-amber-400'
+                                : item.status === 'Contacted'
+                                ? 'border-sky-500/40 text-sky-450'
+                                : 'border-emerald-500/40 text-emerald-400'
+                            }`}
+                          >
+                            <option value="New">🟢 New Leads</option>
+                            <option value="Contacted">🔵 Contacted</option>
+                            <option value="In Progress">🟡 Active Signage</option>
+                          </select>
+
+                          <button
+                            onClick={() => onDeleteEnquiry(item.id)}
+                            className="p-1.5 rounded-lg border border-white/5 bg-neutral-950 hover:bg-red-500/10 text-neutral-500 hover:text-red-400 hover:border-red-500/20 transition-all cursor-pointer focus:outline-none"
+                            title="Delete Lead Entry Permanently"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* Detail attributes grid */}
+                      <div className="grid grid-cols-2 gap-3 text-xs border-y border-white/5 py-3">
+                        <div className="space-y-0.5">
+                          <p className="text-[9px] font-mono text-neutral-500 uppercase tracking-wide">
+                            Category Selection
+                          </p>
+                          <p className="text-white font-bold block">{item.serviceType}</p>
+                        </div>
+                        <div className="space-y-0.5">
+                          <p className="text-[9px] font-mono text-neutral-500 uppercase tracking-wide">
+                            Estimated Budget
+                          </p>
+                          <p className="text-emerald-400 font-bold block">{item.budgetRange}</p>
+                        </div>
+                        <div className="space-y-0.5">
+                          <p className="text-[9px] font-mono text-neutral-500 uppercase tracking-wide">
+                            Location City
+                          </p>
+                          <p className="text-white/80 font-semibold flex items-center">
+                            <MapPin className="w-3 h-3 mr-1 text-gold-400" />
+                            {item.city}
+                          </p>
+                        </div>
+                        <div className="space-y-0.5">
+                          <p className="text-[9px] font-mono text-neutral-500 uppercase tracking-wide">
+                            Callback Line
+                          </p>
+                          <p className="text-[#ffd744] font-bold flex items-center">
+                            <PhoneCall className="w-3 h-3 mr-1 shrink-0" />
+                            {item.phone}
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Brief text */}
+                      <div className="space-y-1">
+                        <span className="text-[9px] font-mono text-neutral-500 uppercase tracking-widest font-semibold flex items-center">
+                          <MessageSquare className="w-3.5 h-3.5 mr-1 text-gold-400" />
+                          Requirements Brief
+                        </span>
+                        <p className="text-xs text-neutral-400 leading-relaxed italic bg-neutral-950 p-3 rounded-xl border border-white/5">
+                          "{item.message}"
+                        </p>
+                      </div>
+
+                    </div>
+
+                    {/* Attachment detail block if available */}
+                    {item.uploadedFile && (
+                      <div className="text-xs bg-emerald-500/5 border border-emerald-500/10 rounded-xl p-3 flex items-center justify-between">
+                        <div className="flex items-center space-x-2.5">
+                          <div className="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/25 flex items-center justify-center text-emerald-400 shrink-0">
+                            <FileCheck className="w-4 h-4 text-emerald-400" />
+                          </div>
+                          <div className="text-left">
+                            <p className="text-white font-bold block max-w-[180px] truncate">{item.uploadedFile.name}</p>
+                            <span className="text-[9px] font-mono text-emerald-400 font-extrabold pb-0.5 block">VECTOR DIRECT MATCH ({item.uploadedFile.type})</span>
+                          </div>
+                        </div>
+                        <span className="text-[10px] text-neutral-400 font-mono shrink-0 bg-neutral-950 px-2 py-0.5 rounded border border-white/5">
+                          {item.uploadedFile.size}
+                        </span>
+                      </div>
+                    )}
+
+                  </motion.div>
+                ))}
+              </div>
+            )}
+          </AnimatePresence>
+
+        </div>
+
+      </div>
+    </section>
+  );
+}

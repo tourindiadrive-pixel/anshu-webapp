@@ -175,6 +175,24 @@ export default function EnquiriesList({
                         </p>
                       </div>
 
+                      {/* Display attached design vector file metadata if present */}
+                      {item.uploadedFile && (
+                        <div className="mt-2 text-xs bg-emerald-500/5 border border-emerald-500/20 rounded-xl p-3 flex items-center justify-between">
+                          <div className="flex items-center space-x-2.5">
+                            <div className="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/25 flex items-center justify-center text-emerald-450 shrink-0">
+                              <ClipboardList className="w-4 h-4 text-emerald-400" />
+                            </div>
+                            <div className="text-left">
+                              <p className="text-white font-bold block max-w-[180px] truncate">{item.uploadedFile.name}</p>
+                              <span className="text-[9px] font-mono text-emerald-400 font-extrabold pb-0.5 block">VECTOR DIRECT MATCH ({item.uploadedFile.type})</span>
+                            </div>
+                          </div>
+                          <span className="text-[10px] text-neutral-400 font-mono shrink-0 bg-neutral-950 px-2 py-0.5 rounded border border-white/5">
+                            {item.uploadedFile.size}
+                          </span>
+                        </div>
+                      )}
+
                     </motion.div>
                   ))
                 )}

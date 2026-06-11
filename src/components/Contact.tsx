@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Send, Phone, MapPin, Mail, Sparkles, CheckCircle2, AlertCircle } from 'lucide-react';
 import { Enquiry } from '../types';
+import DesignUploader from './DesignUploader';
 
 interface ContactProps {
   onEnquirySubmitted: (enquiry: Enquiry) => void;
@@ -17,9 +18,28 @@ export default function Contact({ onEnquirySubmitted }: ContactProps) {
     message: ''
   });
 
+  const [uploadedDesign, setUploadedDesign] = useState<{
+    name: string;
+    size: string;
+    type: string;
+    previewUrl?: string;
+  } | null>(null);
+
   const [errors, setErrors] = useState<Partial<typeof formState>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+
+  React.useEffect(() => {
+    const handleModalFile = (e: any) => {
+      if (e.detail) {
+        setUploadedDesign(e.detail);
+      }
+    };
+    window.addEventListener('modal-file-uploaded', handleModalFile);
+    return () => {
+      window.removeEventListener('modal-file-uploaded', handleModalFile);
+    };
+  }, []);
 
   const budgetOptions = [
     '₹5,000 - ₹15,000 (Standard)',
@@ -95,7 +115,8 @@ export default function Contact({ onEnquirySubmitted }: ContactProps) {
           hour: '2-digit',
           minute: '2-digit'
         }),
-        status: 'New'
+        status: 'New',
+        uploadedFile: uploadedDesign || undefined
       };
 
       // callback to applet state
@@ -103,6 +124,7 @@ export default function Contact({ onEnquirySubmitted }: ContactProps) {
       
       setIsSubmitting(false);
       setIsSuccess(true);
+      setUploadedDesign(null);
       
       // Reset form variables
       setFormState({
@@ -412,6 +434,18 @@ export default function Contact({ onEnquirySubmitted }: ContactProps) {
                           {errors.message}
                         </span>
                       )}
+                    </div>
+
+                    {/* Interactive B2B Design Uploader Field */}
+                    <div className="relative group">
+                      <label className="block text-xs font-mono text-neutral-400 uppercase tracking-wider mb-2 font-medium">
+                        Reference Artwork & Vector Files (.AI, .EPS, .PDF)
+                      </label>
+                      <DesignUploader 
+                        selectedFile={uploadedDesign}
+                        onFileSelect={setUploadedDesign}
+                        className="w-full"
+                      />
                     </div>
 
                     {/* Submit action button with hover neon glow */}

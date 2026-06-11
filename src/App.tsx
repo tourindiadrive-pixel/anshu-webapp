@@ -11,6 +11,7 @@ import Services from './components/Services';
 import GalleryModal from './components/GalleryModal';
 import TrustedBy from './components/TrustedBy';
 import Testimonials from './components/Testimonials';
+import TrustPortfolio from './components/TrustPortfolio';
 import Process from './components/Process';
 import Contact from './components/Contact';
 import FloatingWhatsApp from './components/FloatingWhatsApp';
@@ -19,6 +20,7 @@ import ScrollProgress from './components/ScrollProgress';
 import Footer from './components/Footer';
 import EnquiriesList from './components/EnquiriesList';
 import BottomNavBar from './components/BottomNavBar';
+import AdminDashboardSection from './components/AdminDashboardSection';
 import { ServiceItem, Enquiry } from './types';
 
 export default function App() {
@@ -89,6 +91,20 @@ export default function App() {
     );
   };
 
+  // State to check and configure administrator status dynamically
+  const [isAdmin, setIsAdmin] = React.useState<boolean>(() => {
+    const saved = localStorage.getItem('anshu_is_admin');
+    return saved === 'true';
+  });
+
+  const handleToggleAdmin = () => {
+    setIsAdmin((prev) => {
+      const next = !prev;
+      localStorage.setItem('anshu_is_admin', String(next));
+      return next;
+    });
+  };
+
   // Open the gallery modal for a specific chosen service card
   const handleSelectService = (service: ServiceItem) => {
     setActiveGalleryService(service);
@@ -106,6 +122,8 @@ export default function App() {
       <Navbar 
         onOpenEnquiries={() => setIsEnquiriesOpen(true)} 
         enquiriesCount={enquiries.length} 
+        isAdmin={isAdmin}
+        onToggleAdmin={handleToggleAdmin}
       />
 
       {/* Sub sections components division */}
@@ -154,8 +172,26 @@ export default function App() {
           <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-[#d4af37]/25 via-[#d9869d]/35 via-[#d4af37]/25 to-transparent" />
         </div>
 
+        {/* High-Trust B2B Proof & Client Portfolio Grid */}
+        <TrustPortfolio />
+
+        {/* Elegant Thin Gold Rose Separator */}
+        <div className="relative w-full flex items-center justify-center py-0 my-0 pointer-events-none select-none z-10">
+          <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-[#d4af37]/25 via-[#d9869d]/35 via-[#d4af37]/25 to-transparent" />
+        </div>
+
         {/* Luxury contact enquiry panel */}
         <Contact onEnquirySubmitted={handleEnquirySubmitted} />
+
+        {/* Dedicated Admin Dashboard CRM Panel — Protected to be visible ONLY to administrators */}
+        {isAdmin && (
+          <AdminDashboardSection 
+            enquiries={enquiries}
+            onDeleteEnquiry={handleDeleteEnquiry}
+            onUpdateStatus={handleUpdateStatus}
+            onToggleAdmin={handleToggleAdmin}
+          />
+        )}
 
       </main>
 
@@ -184,16 +220,19 @@ export default function App() {
           setActiveGalleryService(null);
         }}
         service={activeGalleryService}
+        isAdmin={isAdmin}
       />
 
-      {/* Slide-out CRM Enquiries Monitor Panel */}
-      <EnquiriesList
-        isOpen={isEnquiriesOpen}
-        onClose={() => setIsEnquiriesOpen(false)}
-        enquiries={enquiries}
-        onDeleteEnquiry={handleDeleteEnquiry}
-        onUpdateStatus={handleUpdateStatus}
-      />
+      {/* Slide-out CRM Enquiries Monitor Panel — Protected to render only if isAdmin is true */}
+      {isAdmin && (
+        <EnquiriesList
+          isOpen={isEnquiriesOpen}
+          onClose={() => setIsEnquiriesOpen(false)}
+          enquiries={enquiries}
+          onDeleteEnquiry={handleDeleteEnquiry}
+          onUpdateStatus={handleUpdateStatus}
+        />
+      )}
 
     </div>
   );

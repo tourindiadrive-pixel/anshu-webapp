@@ -2,16 +2,32 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, ZoomIn, ChevronLeft, ChevronRight, Image as ImageIcon, MapPin, ExternalLink } from 'lucide-react';
 import { ServiceItem, GalleryItem } from '../types';
+import DesignUploader from './DesignUploader';
 
 interface GalleryModalProps {
   isOpen: boolean;
   onClose: () => void;
   service: ServiceItem | null;
+  isAdmin?: boolean;
 }
 
-export default function GalleryModal({ isOpen, onClose, service }: GalleryModalProps) {
+export default function GalleryModal({ isOpen, onClose, service, isAdmin = false }: GalleryModalProps) {
   const [activeLightboxIndex, setActiveLightboxIndex] = useState<number | null>(null);
   const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [modalUploadFile, setModalUploadFile] = useState<any>(null);
+
+  // Synchronize modal state file uploads to the contact enquiry form
+  useEffect(() => {
+    if (modalUploadFile) {
+      window.dispatchEvent(new CustomEvent('modal-file-uploaded', { detail: modalUploadFile }));
+    }
+  }, [modalUploadFile]);
+
+  useEffect(() => {
+    if (isOpen) {
+      setModalUploadFile(null);
+    }
+  }, [isOpen]);
 
   // Block scroll on body when gallery modal is open
   useEffect(() => {
@@ -150,20 +166,80 @@ export default function GalleryModal({ isOpen, onClose, service }: GalleryModalP
                 </div>
               </motion.div>
 
-              {/* Long description briefing */}
-              <motion.div
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.1 }}
-                className="max-w-3xl mb-12"
-              >
-                <h4 className="text-xs font-mono text-[#ffd744] uppercase tracking-[0.25em] font-black mb-3">
-                  Precision Craft Description
-                </h4>
-                <p className="text-neutral-200 font-normal leading-relaxed text-base sm:text-lg">
-                  {service.longDescription}
-                </p>
-              </motion.div>
+              {/* Description & Interactive Design Reference Upload Block Grid */}
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 mb-16 items-start">
+                <motion.div
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.1 }}
+                  className={`${isAdmin ? 'lg:col-span-7' : 'lg:col-span-12'} space-y-4 text-left`}
+                >
+                  <h4 className="text-xs font-mono text-[#ffd744] uppercase tracking-[0.25em] font-black">
+                    Precision Craft Description
+                  </h4>
+                  <p className="text-neutral-200 font-normal leading-relaxed text-base sm:text-lg">
+                    {service.longDescription}
+                  </p>
+                </motion.div>
+
+                {/* Live upload analyzer card - only visible to admins */}
+                {isAdmin && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.15 }}
+                    className="lg:col-span-5 bg-white/[0.02] border border-white/10 rounded-2xl p-6 text-left space-y-4 shadow-xl relative overflow-hidden"
+                    id={`upload-spot-${service.id}`}
+                  >
+                    <div className="absolute top-0 left-0 w-1.5 h-full bg-[#ff4773]" />
+                    
+                    <div className="space-y-1 pl-1.5">
+                      <h5 className="text-xs font-mono text-[#ff4773] uppercase tracking-wider font-extrabold flex items-center gap-1.5">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#ff4773] animate-pulse" />
+                        Artwork Pre-Check Engine
+                      </h5>
+                      <p className="text-[10px] text-neutral-400 font-normal leading-normal">
+                        Submit references or vector artwork to test against our direct {service.title} printing blueprints.
+                      </p>
+                    </div>
+
+                    <DesignUploader 
+                      selectedFile={modalUploadFile}
+                      onFileSelect={setModalUploadFile}
+                      className="w-full"
+                    />
+
+                    {modalUploadFile && (
+                      <motion.div 
+                        initial={{ opacity: 0, height: 0 }} 
+                        animate={{ opacity: 1, height: 'auto' }}
+                        className="pt-3 border-t border-white/5 space-y-2 text-left"
+                      >
+                        <p className="text-[10px] font-sans text-neutral-300 leading-normal">
+                          Your design is fully compatible! Continue to the inquiry section below directly with this cached design.
+                        </p>
+                        <a 
+                          href="#contact" 
+                          onClick={() => {
+                            onClose();
+                            // Propagate path trigger scroll down to contact form
+                            setTimeout(() => {
+                              const refElem = document.getElementById('contact');
+                              if (refElem) {
+                                refElem.scrollIntoView({ behavior: 'smooth' });
+                              }
+                            }, 350);
+                          }}
+                          className="inline-flex items-center gap-1.5 text-[10px] font-mono tracking-widest text-[#ffd744] hover:text-white uppercase font-black cursor-pointer"
+                        >
+                          Proceed To Inquiry Setup
+                          <ChevronRight className="w-3.5 h-3.5 text-[#ffd744]" />
+                        </a>
+                      </motion.div>
+                    )}
+                  </motion.div>
+                )}
+              </div>
 
               {/* Luxury Masonry Layout */}
               <motion.div
