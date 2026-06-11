@@ -82,8 +82,8 @@ export default function Contact({ onEnquirySubmitted, isAdmin }: ContactProps) {
     if (!formState.name.trim()) tempErrors.name = 'Full name is required';
     if (!formState.phone.trim()) {
       tempErrors.phone = 'Phone number is required';
-    } else if (!/^\+?[0-9\s-]{10,14}$/.test(formState.phone.trim())) {
-      tempErrors.phone = 'Please enter a valid phone number (10+ digits)';
+    } else if (!/^[0-9]{10}$/.test(formState.phone.trim())) {
+      tempErrors.phone = 'Please enter a valid 10-digit mobile number';
     }
     if (!formState.email.trim()) {
       tempErrors.email = 'Email address is required';
@@ -120,7 +120,7 @@ export default function Contact({ onEnquirySubmitted, isAdmin }: ContactProps) {
       const newEnquiry: Enquiry = {
         id: generatedId,
         name: formState.name,
-        phone: formState.phone,
+        phone: `+91 ${formState.phone.trim()}`,
         email: formState.email.trim(),
         city: formState.city,
         serviceType: formState.serviceType,
@@ -410,20 +410,29 @@ export default function Contact({ onEnquirySubmitted, isAdmin }: ContactProps) {
                       {/* Phone input */}
                       <div className="relative group">
                         <label className="block text-xs font-mono text-neutral-400 uppercase tracking-wider mb-2 font-medium">
-                          Phone Number
+                          WhatsApp Mobile Number
                         </label>
-                        <input
-                          type="tel"
-                          name="phone"
-                          value={formState.phone}
-                          onChange={handleChange}
-                          placeholder="e.g. 99123 45678"
-                          className={`w-full bg-neutral-950 border rounded-xl px-4.5 py-3.5 text-sm text-white placeholder-neutral-600 focus:outline-none transition-all ${
-                            errors.phone 
-                              ? 'border-red-500/50 focus:border-red-500 focus:shadow-[0_0_15px_rgba(239,68,68,0.15)]' 
-                              : 'border-white/10 focus:border-gold-500 focus:shadow-[0_0_15px_rgba(217,134,157,0.25)]'
-                          }`}
-                        />
+                        <div className={`flex rounded-xl bg-neutral-950 border overflow-hidden transition-all focus-within:border-gold-500 focus-within:shadow-[0_0_15px_rgba(217,134,157,0.25)] ${
+                          errors.phone ? 'border-red-500/50' : 'border-white/10'
+                        }`}>
+                          <span className="flex items-center justify-center bg-neutral-900 border-r border-white/10 px-4 text-sm font-mono text-[#ffd744] font-bold select-none">
+                            +91
+                          </span>
+                          <input
+                            type="tel"
+                            name="phone"
+                            value={formState.phone}
+                            onChange={(e) => {
+                              const numbersOnly = e.target.value.replace(/[^0-9]/g, '');
+                              if (numbersOnly.length <= 10) {
+                                e.target.value = numbersOnly;
+                                handleChange(e);
+                              }
+                            }}
+                            placeholder="e.g. 9912345678"
+                            className="w-full bg-transparent px-4 py-3.5 text-sm text-white placeholder-neutral-600 focus:outline-none"
+                          />
+                        </div>
                         {errors.phone && (
                           <span className="flex items-center text-xs text-red-400 mt-1.5 font-mono">
                             <AlertCircle className="w-3.5 h-3.5 mr-1" />

@@ -22,7 +22,8 @@ import {
   Instagram,
   Facebook,
   FileText,
-  Mail
+  Mail,
+  Download
 } from 'lucide-react';
 import { Enquiry } from '../types';
 
@@ -130,6 +131,62 @@ export default function AdminDashboardSection({
     });
   }, [enquiries, searchTerm, statusFilter, serviceFilter]);
 
+  // Export all lead database records to a structured Excel-compatible CSV file
+  const handleExportToCSV = () => {
+    if (enquiries.length === 0) {
+      alert("No active lead records found to export.");
+      return;
+    }
+
+    // CSV headers to match requested schema: Timestamp, Client Name, WhatsApp Number, Category, City, Budget, and Requirements Brief
+    const headers = [
+      "Enquiry ID",
+      "Timestamp",
+      "Client Name",
+      "WhatsApp Number",
+      "Email Address",
+      "Category",
+      "City",
+      "Estimated Budget",
+      "Requirements Brief",
+      "Status"
+    ];
+
+    const escapeCSVCell = (val: string) => {
+      if (val === undefined || val === null) return '""';
+      const formatted = val.toString().replace(/"/g, '""');
+      return `"${formatted}"`;
+    };
+
+    const rows = enquiries.map((item) => [
+      escapeCSVCell(item.id),
+      escapeCSVCell(item.timestamp),
+      escapeCSVCell(item.name),
+      escapeCSVCell(item.phone),
+      escapeCSVCell(item.email || ""),
+      escapeCSVCell(item.serviceType),
+      escapeCSVCell(item.city),
+      escapeCSVCell(item.budgetRange),
+      escapeCSVCell(item.message),
+      escapeCSVCell(item.status)
+    ]);
+
+    const csvContent = [
+      headers.join(","),
+      ...rows.map(row => row.join(","))
+    ].join("\n");
+
+    const blob = new Blob(["\uFEFF" + csvContent], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", `anshu_print_studio_leads_${new Date().toISOString().slice(0, 10)}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
   return (
     <section 
       id="admin-crm-dashboard" 
@@ -162,13 +219,24 @@ export default function AdminDashboardSection({
             </p>
           </div>
 
-          <button 
-            onClick={onToggleAdmin}
-            className="px-6 py-3 rounded-full bg-[#ff4773]/10 hover:bg-[#ff4773]/20 text-[#ff4773] hover:text-white border border-[#ff4773]/40 hover:border-[#ff4773] font-mono text-xs tracking-wider uppercase transition-all duration-300 cursor-pointer select-none font-bold shadow-[0_0_15px_rgba(255,71,115,0.15)] hover:shadow-[0_0_25px_rgba(255,71,115,0.3)] animate-pulse"
-            id="admin-dashboard-exit-btn"
-          >
-            ← Exit Admin Dashboard & View Website
-          </button>
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 w-full md:w-auto shrink-0">
+            <button 
+              onClick={handleExportToCSV}
+              className="px-5 py-3 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-mono text-xs tracking-wider uppercase transition-all duration-300 cursor-pointer select-none font-bold shadow-[0_4px_15px_rgba(16,185,129,0.15)] hover:shadow-[0_4px_25px_rgba(16,185,129,0.3)] flex items-center justify-center gap-2 border border-emerald-500/30"
+              title="Compile and download all lead entries to an Excel-compatible CSV file"
+            >
+              <Download className="w-4 h-4" />
+              <span>📥 Export Enquiries to Excel</span>
+            </button>
+
+            <button 
+              onClick={onToggleAdmin}
+              className="px-6 py-3 rounded-full bg-[#ff4773]/10 hover:bg-[#ff4773]/20 text-[#ff4773] hover:text-white border border-[#ff4773]/40 hover:border-[#ff4773] font-mono text-xs tracking-wider uppercase transition-all duration-300 cursor-pointer select-none text-center font-bold shadow-[0_0_12px_rgba(255,71,115,0.1)] hover:shadow-[0_0_20px_rgba(255,71,115,0.2)]"
+              id="admin-dashboard-exit-btn"
+            >
+              ← Exit Dashboard
+            </button>
+          </div>
         </div>
 
         {/* Analytics cards grid */}
@@ -478,6 +546,26 @@ export default function AdminDashboardSection({
 
                         {/* Actions block row */}
                         <div className="flex items-center space-x-1.5">
+                          <button
+                            onClick={() => {
+                              const digits = item.phone.replace(/[^0-9]/g, '');
+                              let waPhone = digits;
+                              if (digits.length === 10) {
+                                waPhone = '91' + digits;
+                              } else if (digits.length === 12 && digits.startsWith('91')) {
+                                waPhone = digits;
+                              } else if (digits.length > 10 && !digits.startsWith('91')) {
+                                waPhone = '91' + digits.slice(-10);
+                              }
+                              window.open(`https://wa.me/${waPhone}`, '_blank');
+                            }}
+                            className="inline-flex items-center gap-1 text-[9px] font-mono font-bold rounded-lg px-2 py-1.5 text-emerald-400 bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/25 transition-all cursor-pointer focus:outline-none"
+                            title="🟢 Manual WhatsApp"
+                          >
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shrink-0" />
+                            <span>WhatsApp</span>
+                          </button>
+
                           <select
                             value={item.status}
                             onChange={(e) => onUpdateStatus(item.id, e.target.value as any)}
